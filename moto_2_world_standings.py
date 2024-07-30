@@ -4,9 +4,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import bar_chart_race as bcr
 plt.style.use('ggplot')
-race = 'MUGELLO'
+race = 'DEUTCHLAND'
 season = '2024'
-number_of_gp = 7
+number_of_gp = 9
 drivers = ['Fermin ALDEGUER', 'Joe ROBERTS', 'Manuel GONZALEZ', 'Sergio GARCIA', 
            'Albert ARENAS', 'Ai OGURA', 'Tony ARBOLINO', 'Jeremy ALCOBA', 'Celestino VIETTI', 
            'Somkiat CHANTRA', 'Filip SALAC', 'Izan GUEVARA', 'Zonta VD GOORBE', 'Deniz ÖNCÜ',

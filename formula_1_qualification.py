@@ -9,7 +9,7 @@ import os
 #plt.style.use('ggplot')
 
 
-race = 'MONACO'
+race = 'BELGIA'
 season = '2024'
 
 if not os.path.isdir(f'{race}_{season}_F1/{race}_{season}_Analysis'):
@@ -62,7 +62,7 @@ for ft in first_ten:
     if i%2 == 1:
         ab = AnnotationBbox(imagebox, (0.2, j), bboxprops =dict(edgecolor='white'), frameon=False)
         ax.add_artist(ab)
-        name_time = f"{name.split(' ')[0]}\n{name.split(' ')[1]}\n{time}"
+        name_time = f"{i}. {name.split(' ')[0]}\n{name.split(' ')[1]}\n{time}"
         plt.text(0.3, j, name_time, fontsize=16,
                     fontname='FreeSans', color=color, fontweight='bold',
                     #bbox=dict(boxstyle='round', edgecolor='none', facecolor='white')
@@ -70,7 +70,7 @@ for ft in first_ten:
     else:
         ab = AnnotationBbox(imagebox, (0.7, j), bboxprops =dict(edgecolor='white'), frameon=False)
         ax.add_artist(ab)
-        name_time = f"{name.split(' ')[0]}\n{name.split(' ')[1]}\n{time}"
+        name_time = f"{i}. {name.split(' ')[0]}\n{name.split(' ')[1]}\n{time}"
         plt.text(0.8, j, name_time, fontsize=16, 
                     fontname='FreeSans', color=color, fontweight='bold',
                     #bbox=dict(boxstyle='round', edgecolor='none', facecolor='white')
@@ -114,7 +114,7 @@ for ft in last_ten:
     if i%2 == 1:
         ab = AnnotationBbox(imagebox, (0.2, j), bboxprops =dict(edgecolor='white'), frameon=False)
         ax.add_artist(ab)
-        name_time = f"{name.split(' ')[0]}\n{name.split(' ')[1]}\n{time}"
+        name_time = f"{i+10}. {name.split(' ')[0]}\n{name.split(' ')[1]}\n{time}"
         plt.text(0.3, j, name_time, fontsize=16,
                     fontname='FreeSans', color=color, fontweight='bold',
                     #bbox=dict(boxstyle='round', edgecolor='none', facecolor='white')
@@ -122,7 +122,7 @@ for ft in last_ten:
     else:
         ab = AnnotationBbox(imagebox, (0.7, j), bboxprops =dict(edgecolor='white'), frameon=False)
         ax.add_artist(ab)
-        name_time = f"{name.split(' ')[0]}\n{name.split(' ')[1]}\n{time}"
+        name_time = f"{i+10}. {name.split(' ')[0]}\n{name.split(' ')[1]}\n{time}"
         plt.text(0.8, j, name_time, fontsize=16, 
                     fontname='FreeSans', color=color, fontweight='bold',
                     #bbox=dict(boxstyle='round', edgecolor='none', facecolor='white')

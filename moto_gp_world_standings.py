@@ -3,9 +3,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import bar_chart_race as bcr
-race = 'MUGELLO'
+race = 'DEUTCHLAND'
 season = '2024'
-number_of_gp = 7
+number_of_gp = 9
 plt.style.use('ggplot')
 
 drivers = [ 'Marc MARQUEZ', 'Marco BEZZECCHI', 'Alex MARQUEZ', 'Enea BASTIANINI', 'Brad BINDER', 

@@ -2,7 +2,7 @@ import pdfplumber
 import pandas as pd
 import bar_chart_race as bcr
 import matplotlib.pyplot as plt
-race = 'MUGELLO'
+race = 'DEUTCHLAND'
 season = '2024'
 pdf_path = f'/home/boris/Documents/matplotlib_exercize/{race}_{season}_MOTO_3/LapChart.pdf'
 

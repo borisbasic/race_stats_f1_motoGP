@@ -2,7 +2,7 @@ import pdfplumber
 import pandas as pd
 import bar_chart_race as bcr
 import matplotlib.pyplot as plt
-race = 'MUGELLO'
+race = 'DEUTCHLAND'
 season = '2024'
 pdf_path = f'/home/boris/Documents/matplotlib_exercize/{race}_{season}/LapChart.pdf'
 
@@ -10,17 +10,17 @@ drivers = ['Francesco BAGNAIA', 'Marc MARQUEZ', 'Marco BEZZECCHI', 'Alex MARQUEZ
            'Fabio DI GIANNANTONI', 'Miguel OLIVEIRA', 'Pedro ACOSTA', 'Maverick VIÑALES', 'Raul FERNANDEZ',
            'Joan MIR', 'Alex RINS', 'Takaaki NAKAGAMI', 'Fabio QUARTARARO', 'Stefan BRADL', 'Luca MARINI',
            'Augusto FERNANDEZ', 'Jack MILLER', 'Franco MORBIDELLI', 'Lorenzo SAVADORI', 'Jorge MARTIN', 'Johann ZARCO',
-           'Aleix ESPARGARO', 'Daniel PEDROSA', 'Pol ESPARGARO']
+           'Aleix ESPARGARO', 'Daniel PEDROSA', 'Pol ESPARGARO', 'Remy GARDNER']
 drivers_colors = ['#cc0001', '#9aadd2', '#e1fa50', '#9aadd2', '#cc0001', '#a44721',
           '#e1fb4f', '#0254b8', '#990525', '#5bb33a', '#0254b8',
           '#fea011', '#072e7e', '#cecece', '#072e7e', '#fea011', '#fea011',
           '#990525', '#a44721', '#8432c5', '#5cb139', '#8432c5', '#cecece',
-          '#5bb33a', '#a44721', '#990525']
+          '#5bb33a', '#a44721', '#990525', '#072e7e']
 drivers_numbers = [1, 93, 72, 73, 23, 33,
                    49, 88, 31, 12, 25, 
                    36, 42, 30, 20, 6, 10,
                    37, 43, 21, 32, 89, 5, 
-                   41, 26, 44]
+                   41, 26, 44, 87]
 with pdfplumber.open(pdf_path) as pdf:
     page = pdf.pages[0]
     page_width = page.width

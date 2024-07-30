@@ -2,7 +2,7 @@ import pdfplumber
 import pandas as pd
 import bar_chart_race as bcr
 import matplotlib.pyplot as plt
-race = 'MONACO'
+race = 'BELGIA'
 season = '2024'
 pdf_path = f'/home/boris/Documents/matplotlib_exercize/{race}_{season}_F1/Lap_Chart.pdf'
 
@@ -27,13 +27,13 @@ drivers_numbers = [1, 11, 16, 4, 55,
                    23, 24, 10, 77, 2]
 with pdfplumber.open(pdf_path) as pdf:
     page = pdf.pages[0]
-    page_1 = pdf.pages[1]
+    #page_1 = pdf.pages[1]
     page_width = page.width
     page_height = page.height
     crop_box = (0, 164, page_width, page_height-70)
     cropped_page = page.within_bbox(crop_box)
-    cropped_page_1 = page_1.within_bbox(crop_box)
-    text = cropped_page.extract_text() +'\n'+ cropped_page_1.extract_text()
+    #cropped_page_1 = page_1.within_bbox(crop_box)
+    text = cropped_page.extract_text() +'\n'#+ cropped_page_1.extract_text()
     
 all_text = text.split('\n')
 start_position = all_text[0].split(' ')[1:]

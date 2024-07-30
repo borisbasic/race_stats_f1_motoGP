@@ -3,8 +3,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import bar_chart_race as bcr
 plt.style.use('ggplot')
-number_of_gp = 7
-race = 'MUGELLO'
+number_of_gp = 9
+race = 'DEUTCHLAND'
 season = '2024'
 drivers = ['Collin VEIJER', 'David MUÑOZ', 'Ivan ORTOLA', 'Ryusei YAMANAKA', 'Joel KELSO',
            'Adrian FERNANDEZ', 'Daniel HOLGADO', 'Nicola CARRARO', 'Stefano NEPA', 'Angel PIQUERAS',

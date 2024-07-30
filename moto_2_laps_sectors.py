@@ -8,7 +8,7 @@ import matplotlib.patches as mpathes
 sns.set_theme()
 #plt.style.use('ggplot')
 
-race = 'MUGELLO'
+race = 'DEUTCHLAND'
 season = '2024'
 if not os.path.isdir(f'{race}_{season}_MOTO_2'):
     os.mkdir(f'{race}_{season}_MOTO_2')

@@ -2,7 +2,7 @@ import pdfplumber
 import pandas as pd
 import bar_chart_race as bcr
 import matplotlib.pyplot as plt
-race = 'MONACO'
+race = 'BELGIA'
 season = '2024'
 pdf_path = f'/home/boris/Documents/matplotlib_exercize/{race}_{season}_F1/Lap_Chart.pdf'
 
@@ -20,18 +20,17 @@ drivers_numbers = [1, 11, 16, 4, 55,
                    23, 24, 10, 77, 2]
 with pdfplumber.open(pdf_path) as pdf:
     page = pdf.pages[0]
-    page_1 = pdf.pages[1]
+    #page_1 = pdf.pages[1]
     page_width = page.width
     page_height = page.height
     crop_box = (0, 164, page_width, page_height-70)
     cropped_page = page.within_bbox(crop_box)
-    cropped_page_1 = page_1.within_bbox(crop_box)
-    text = cropped_page.extract_text() +'\n'+ cropped_page_1.extract_text()
+    #cropped_page_1 = page_1.within_bbox(crop_box)
+    text = cropped_page.extract_text() +'\n'#+ cropped_page_1.extract_text()
     
 all_text = text.split('\n')
 start_position = all_text[0].split(' ')[1:]
 starting_grid = all_text[1].split(' ')[1:]
-#print(all_text)
 num_of_drivers = len(start_position)
 
 laps_order_dict = {'start_position': start_position,
@@ -56,7 +55,6 @@ for i in range(2, len(all_text)):
     #            new_line.append('0')
     #    laps_order_dict[f'lap {line[0]}'] = new_line
     #    laps_order.append(new_line)
-print(laps_order_dict)
 df_laps_order = pd.DataFrame(laps_order_dict)
 #df_laps_order = df_laps_order.set_index('starting_grid')
 points = []
@@ -90,7 +88,7 @@ for i in range(len(starting_grid)):
 for key, items in points_per_lap.copy().items():
     if len(items) == 0:
         del points_per_lap[key]
-points_per_lap['laps'] = [f'lap {i}' for i in range(1, 79)]
+points_per_lap['laps'] = [f'lap {i}' for i in range(1, 45)]
 points_df = pd.DataFrame(points_per_lap, index=points_per_lap['laps'])
 points_df.drop('laps', inplace=True, axis='columns')
 
@@ -110,8 +108,8 @@ bcr.bar_chart_race(
     orientation='h', 
     sort='desc', 
     n_bars=10, 
-    steps_per_period=40, 
-    period_length=1000,
+    steps_per_period=10, 
+    period_length=600,
     filename=f'{race}_{season}_F1/LapChart.mp4', 
     cmap=colors,
     #label_bars=False,
