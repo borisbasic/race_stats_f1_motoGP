@@ -129,13 +129,13 @@ laps_times = laps_times.set_axis(change_driver_name, axis=1,)
 
 #laps_times.to_csv(f'/home/boris/Documents/matplotlib_exercize/{race}_{season}_F1/lap_chart_1.csv')
 #laps_times = laps_times.drop(columns=['Oliver BEARMAN'])
-laps_times[laps_times==0] = np.nan
-ticks = [105, 110, 115,]
+laps_times[laps_times==0] = laps_times.mean().mean()
+ticks = [int(laps_times.mean().mean())-5, int(laps_times.mean().mean()), int(laps_times.mean().mean())+5,]
 xticks = [i for i in range(1, 21)]
 drivers.remove('Oliver BEARMAN')
 fig, ax = plt.subplots(figsize=(15, 9))
 
-plt.ylim(105, 115)
+plt.ylim(int(laps_times.mean().mean())-5, int(laps_times.mean().mean())+5)
 
 bplot = ax.boxplot(laps_times,
                    patch_artist=True,)  # will be used to label x-ticks
@@ -154,7 +154,7 @@ plt.xlabel('Drivers', fontweight='bold', fontname='Ubuntu',
 plt.ylabel('Times', fontweight='bold', fontname='Ubuntu',
                         fontsize=15,)
 plt.tight_layout()
-plt.savefig(f'/home/boris/Documents/matplotlib_exercize/{race}_2024_F1/RACE_PACE.jpg')
+plt.savefig(f'/home/boris/Documents/matplotlib_exercize/{race}_2024_F1/{race}_RACE_PACE.jpg')
 
 
 fig, ax = plt.subplots(figsize=(15, 9))
@@ -181,4 +181,4 @@ plt.xlabel('Drivers', fontweight='bold', fontname='Ubuntu',
 plt.ylabel('Times', fontweight='bold', fontname='Ubuntu',
                         fontsize=15,)
 plt.tight_layout()
-plt.savefig(f'/home/boris/Documents/matplotlib_exercize/{race}_2024_F1/RACE_PACE_Violin.jpg')
+plt.savefig(f'/home/boris/Documents/matplotlib_exercize/{race}_2024_F1/{race}_RACE_PACE_Violin.jpg')

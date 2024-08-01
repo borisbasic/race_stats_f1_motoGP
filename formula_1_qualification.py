@@ -83,7 +83,7 @@ plt.axvline(0.05, color='white', linestyle='-', linewidth=9)
 plt.axvline(0.95, color='white', linestyle='-', linewidth=9)
 plt.axis('off')
 plt.title(f'{race} Qualifying Session', fontname='Ubuntu', fontweight='bold', fontsize=21)
-plt.savefig(f'{race}_{season}_F1/ten_first_qualify_order.jpg')
+plt.savefig(f'{race}_{season}_F1/{race}_ten_first_qualify_order.jpg')
 
 
 fig, ax = plt.subplots(figsize = (8, 14), constrained_layout=True, facecolor='#dee2e6')
@@ -135,6 +135,6 @@ plt.axvline(0.05, color='white', linestyle='-', linewidth=9)
 plt.axvline(0.95, color='white', linestyle='-', linewidth=9)
 plt.axis('off')
 plt.title(f'{race} Qualifying Session', fontname='Ubuntu', fontweight='bold', fontsize=21)
-plt.savefig(f'{race}_{season}_F1/ten_last_qualify_order.jpg')
+plt.savefig(f'{race}_{season}_F1/{race}_ten_last_qualify_order.jpg')
  
 
