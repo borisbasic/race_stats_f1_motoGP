@@ -119,3 +119,16 @@ bcr.bar_chart_race(
     bar_kwargs={'alpha': .8},
     fixed_max=max(points)
 )
+
+from moviepy.editor import VideoFileClip, AudioFileClip
+import os, random
+
+all_music_files = os.listdir('/home/boris/Documents/matplotlib_exercize/music')
+vf = f'/home/boris/Documents/matplotlib_exercize/{race}_{season}_F1/LapChart.mp4'
+
+mf = '/home/boris/Documents/matplotlib_exercize/music/'+random.choice(all_music_files)
+
+vc = VideoFileClip(vf)
+mc = AudioFileClip(mf)
+fc = vc.set_audio(mc.subclip(0, vc.duration))
+fc.write_videofile(f'/home/boris/Documents/matplotlib_exercize/{race}_{season}_F1/LapChart_with_audio.mp4',  codec="libx264", audio_codec="aac")
