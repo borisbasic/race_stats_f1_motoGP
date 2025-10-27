@@ -2,7 +2,7 @@ import pdfplumber
 import pandas as pd
 import bar_chart_race as bcr
 import matplotlib.pyplot as plt
-race = 'DEUTCHLAND'
+race = 'SILVERSTONE'
 season = '2024'
 pdf_path = f'/home/boris/Documents/matplotlib_exercize/{race}_{season}/LapChart.pdf'
 
@@ -44,6 +44,7 @@ num_of_drivers = len(start_position)
 
 laps_order_dict = {'start_position': start_position,
                    'starting_grid': starting_grid}
+print(laps_order_dict)
 laps_order = []
 
 for i in range(2, len(all_text)):
@@ -78,7 +79,9 @@ to_plot = sort_by_values_len(to_plot)
 tp_dict = {}
 for tp in to_plot:
     tp_dict[list(tp.items())[0][0]] = list(tp.items())[0][1]
+
 to_plot = tp_dict
+print(to_plot)
 not_finish_driver = 0
 i = num_of_drivers
 print(num_of_drivers)
@@ -108,6 +111,7 @@ for dn in laps_order_dict['starting_grid']:
     ind_of_number = drivers_numbers.index(int(driver_to_plot))
     color_of_driver_to_plot = drivers_colors[ind_of_number]
     drvier = drivers[ind_of_number]
+    print(to_plot[driver_to_plot])
     if len(to_plot[driver_to_plot])>0:
         plt.plot(to_plot[driver_to_plot], color=color_of_driver_to_plot, label=drvier, lw=2)
 

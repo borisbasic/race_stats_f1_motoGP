@@ -7,9 +7,9 @@ import os
 from statistics import mean
 sns.set_theme()
 plt.style.use('ggplot')
-num_of_laps = 30
+num_of_laps = 20
 num_of_drivers = 22
-race = 'DEUTCHLAND'
+race = 'SILVERSTONE'
 season = '2024'
 
 drivers = [ 'Marc MARQUEZ', 'Marco BEZZECCHI', 'Alex MARQUEZ', 'Enea BASTIANINI', 'Brad BINDER', 
@@ -29,16 +29,19 @@ with pdfplumber.open(pdf_patg_final_results) as pdf:
     page = pdf.pages[0]
     page_width = page.width
     page_height = page.height
-    crop_box_1 = (110, 164, page_width-370, page_height - 380)
+    crop_box_1 = (110, 164, page_width-370, page_height - 360)
     text = page.within_bbox(crop_box_1).extract_text()
 all_text = text.split('\n')
 dri = []
 dr_n = []
 dr_c = []
 for at in all_text:
-    if at not in dri:
-        dri.append(at)
+    if at in drivers:
+        if at not in dri:
+            dri.append(at)
+print(dri)
 for d in dri:
+    print(d)
     ind = drivers.index(d)
     dr_c.append(drivers_colors[ind])
 def crop_and_extract_text(pdf_path):
@@ -104,13 +107,17 @@ for i in range(len(all_text)):
 
 new_dict = {}
 for ad in all_data:
-    if len(ad['time']) < num_of_laps:
-        for i in range(num_of_laps-len(ad['time'])):
-            ad['time'].append(mean(ad['time']))
-    new_dict[ad['driver_name'][0]] = ad['time']
+    if len(ad['time']) > 0:
+        if len(ad['time']) < num_of_laps:
+            for i in range(num_of_laps-len(ad['time'])):
+                try:
+                    ad['time'].append(mean(ad['time']))
+                except:
+                    ad['time'].append((0))
+        new_dict[ad['driver_name'][0]] = ad['time']
 
 a_df = pd.DataFrame(new_dict)
-
+print(a_df)
 avg_time = a_df.mean()[0]
 ticks = [int(avg_time)-1, int(avg_time), int(avg_time)+1, int(avg_time)+2, int(avg_time)+3]
 xticks = [i for i in range(1, num_of_drivers+1)]

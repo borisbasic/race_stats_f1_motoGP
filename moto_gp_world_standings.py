@@ -3,9 +3,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import bar_chart_race as bcr
-race = 'DEUTCHLAND'
+race = 'SILVERSTONE'
 season = '2024'
-number_of_gp = 9
+number_of_gp = 10
 plt.style.use('ggplot')
 
 drivers = [ 'Marc MARQUEZ', 'Marco BEZZECCHI', 'Alex MARQUEZ', 'Enea BASTIANINI', 'Brad BINDER', 
@@ -99,7 +99,7 @@ bcr.bar_chart_race(
     sort='desc', 
     n_bars=12, 
     steps_per_period=40, 
-    period_length=2000,
+    period_length=1000,
     filename=f'/home/boris/Documents/matplotlib_exercize/{race}_{season}/World_standings.mp4', 
     cmap=colors,
     figsize=(15, 10),

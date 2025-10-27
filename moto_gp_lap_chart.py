@@ -2,7 +2,7 @@ import pdfplumber
 import pandas as pd
 import bar_chart_race as bcr
 import matplotlib.pyplot as plt
-race = 'DEUTCHLAND'
+race = 'SILVERSTONE'
 season = '2024'
 pdf_path = f'/home/boris/Documents/matplotlib_exercize/{race}_{season}/LapChart.pdf'
 
@@ -114,7 +114,7 @@ bcr.bar_chart_race(
     sort='desc', 
     n_bars=15, 
     steps_per_period=40, 
-    period_length=2000,
+    period_length=1000,
     filename=f'/home/boris/Documents/matplotlib_exercize/{race}_{season}/LapChart.mp4', 
     cmap=colors,
     label_bars=False,
