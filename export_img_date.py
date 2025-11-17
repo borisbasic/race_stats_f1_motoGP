@@ -5,6 +5,22 @@ import numpy as np
 import seaborn as sns
 import os
 from statistics import mean
+from sqlalchemy import create_engine, Table, MetaData, select, and_, insert
+from datetime import datetime
+engine = create_engine("mariadb+mariadbconnector://root:boris123@localhost:3306/motogp")
+metadata = MetaData()
+circuit_info = Table(
+    'circuit_info',
+    metadata,
+    autoload_with=engine,
+    autoload_replace=True
+)
+races_all = Table(
+    'races',
+    metadata,
+    autoload_with=engine,
+    autoload_replace=True
+)
 sns.set_theme()
 plt.style.use('ggplot')
 
@@ -46,6 +62,13 @@ for cm in class_moto:
             for s in seasion:
                 if s not in ['rac']:
                     continue
+
+                race_import = select(races_all).where(and_(races_all.c.race == r,
+                                                    races_all.c.year == int(y)))
+                with engine.connect() as conn:
+                    result = conn.execute(race_import).fetchone()
+                    result_id = result.id
+                    
                 list_of_seasion = os.listdir(f'{images_moto}/{cm}/{y}/{r}')
                 if s not in list_of_seasion:
                     os.mkdir(f'{images_moto}/{cm}/{y}/{r}/{s}')
@@ -80,6 +103,15 @@ for cm in class_moto:
                         'date': date,
                         'info': infos
                     }
+
+                    insert_info = insert(circuit_info).values(name=name,
+                                                               info=infos,
+                                                               date=datetime.strptime(date, "%B %d, %Y").date(),
+                                                               race_id=result_id)
+                    with engine.connect() as conn:
+                        conn.execute(insert_info)
+                        conn.commit()
+
                     df = pd.DataFrame([dict_info])
                     df.to_csv(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/{cm}/{y}/{r}/{s}/circuit_info.csv', index=False)
                 #except:

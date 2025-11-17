@@ -49,6 +49,7 @@ for cm in class_moto:
     important_years = important_things_csv['year'].tolist()
     important_classes = important_things_csv['class'].tolist()
     important_done = important_things_csv['is_done'].tolist()
+    important_session = important_things_csv['session'].tolist()
     if cm not in ['motogp', 'moto2', 'moto3']:
         continue
     year = os.listdir(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/{cm}')
@@ -62,18 +63,17 @@ for cm in class_moto:
             continue
         races = os.listdir(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/{cm}/{y}') 
         for r in races:
-            dones = important_things_csv[(important_things_csv['race'] == r) & (important_things_csv['year'] == int(y)) & (important_things_csv['class'] == cm)]['is_done'].tolist()
-            
-            if 'yes' in dones:
-                continue
+           
             list_of_races = os.listdir(f'{images_moto}/{cm}/{y}')
-            important_races.append(r)
-            important_years.append(y)
-            important_classes.append(cm)
+            
             if r not in list_of_races:
                 os.mkdir(f'{images_moto}/{cm}/{y}/{r}')
             seasion = os.listdir(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/{cm}/{y}/{r}')
             for s in seasion:
+                dones = important_things_csv[(important_things_csv['race'] == r) & (important_things_csv['year'] == int(y)) & (important_things_csv['class'] == cm) & (important_things_csv['session'] == s)]['is_done'].tolist()
+            
+                if 'yes' in dones:
+                    continue
                 if s not in ['rac', 'spr']:
                     continue
                 list_of_seasion = os.listdir(f'{images_moto}/{cm}/{y}/{r}')
@@ -224,10 +224,15 @@ for cm in class_moto:
                 ax.legend(handles=[l], loc=(0,-0.08), fontsize=13)
                 plt.savefig(f'{images_moto}/{cm}/{y}/{r}/{s}/Fastest_Speed_By_lap.jpg')
 
-            important_done.append('yes')
-            new_dict = {'race': important_races, 
-                        'is_done': important_done, 
-                        'year': important_years, 
-                        'class': important_classes}
-            new_df = pd.DataFrame(new_dict)
-            new_df.to_csv('/home/boris/Documents/matplotlib_exercize/done/speed.csv', index=False)
+                important_done.append('yes')
+                important_races.append(r)
+                important_years.append(y)
+                important_classes.append(cm)
+                important_session.append(s)
+                new_dict = {'race': important_races, 
+                            'is_done': important_done, 
+                            'year': important_years, 
+                            'class': important_classes,
+                            'session': important_session}
+                new_df = pd.DataFrame(new_dict)
+                new_df.to_csv('/home/boris/Documents/matplotlib_exercize/done/speed.csv', index=False)

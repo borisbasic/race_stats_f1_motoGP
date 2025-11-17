@@ -14,11 +14,13 @@ for ind, row in all_races.iterrows():
     ses = '2025'
     race = row['race']
     race_small = row['race_small']
+    
+    print(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/motogp/{ses}/{race}/rac/Anaylsis.pdf')
     list_of_races = os.listdir(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/moto3/{ses}')
-    if race in list_of_races:
-        continue
-    else:
+    if not os.path.exists(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/moto3/{ses}/{race}'):
         os.mkdir(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/moto3/{ses}/{race}')
+    if os.path.exists(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/motogp/{ses}/{race}/rac/Analysis.pdf'):
+        continue
     url = f'https://www.motogp.com/en/gp-results/{ses}/{race_small}/moto3/rac/classification'
     if not os.path.exists(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/moto3/{ses}'):
         os.mkdir(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/moto3/{ses}')
@@ -64,7 +66,8 @@ for ind, row in all_races.iterrows():
         btns = WebDriverWait(pdfs_cont[0], 10).until(EC.presence_of_all_elements_located(
             (By.TAG_NAME, 'button')))
         
-        os.mkdir(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/moto3/{ses}/{race}/{s[0]}')
+        if not os.path.exists(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/moto3/{ses}/{race}/{s[0]}'):
+            os.mkdir(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/moto3/{ses}/{race}/{s[0]}')
         list_of_folders = ['session_results', 'championship_results', 'event_results']
         i = 0
         pdfs = WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located(

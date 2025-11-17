@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
 import os
-from statistics import mean
 sns.set_theme()
 plt.style.use('ggplot')
 
@@ -31,6 +30,7 @@ for cm in class_moto:
             continue
         races = os.listdir(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/{cm}/{y}') 
         for r in races:
+
             dones = important_things_csv[(important_things_csv['race'] == r) & (important_things_csv['year'] == int(y)) & (important_things_csv['class'] == cm)]['is_done'].tolist()
             
             if 'yes' in dones:

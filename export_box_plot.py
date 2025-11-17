@@ -8,7 +8,8 @@ from statistics import mean
 sns.set_theme()
 plt.style.use('ggplot')
 pd.options.mode.chained_assignment = None
-
+race_done = False
+sprint_done = False
 def sort_by_values_len(dict):
     dict_len= {key: len(value) for key, value in dict.items()}
     import operator
@@ -24,6 +25,7 @@ for cm in class_moto:
     important_years = important_things_csv['year'].tolist()
     important_classes = important_things_csv['class'].tolist()
     important_done = important_things_csv['is_done'].tolist()
+    important_sessions = important_things_csv['session'].tolist()
     if cm not in ['motogp', 'moto2', 'moto3']:
         continue
     year = os.listdir(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/{cm}')
@@ -37,25 +39,23 @@ for cm in class_moto:
             continue
         races = os.listdir(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/{cm}/{y}') 
         for r in races:
-            dones = important_things_csv[(important_things_csv['race'] == r) & (important_things_csv['year'] == int(y)) & (important_things_csv['class'] == cm)]['is_done'].tolist()
             
-            if 'yes' in dones:
-                continue
             list_of_races = os.listdir(f'{images_moto}/{cm}/{y}')
-            important_races.append(r)
-            important_years.append(y)
-            important_classes.append(cm)
             if r not in list_of_races:
                 os.mkdir(f'{images_moto}/{cm}/{y}/{r}')
             seasion = os.listdir(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/{cm}/{y}/{r}')
             for s in seasion:
-
+                dones = important_things_csv[(important_things_csv['race'] == r) & (important_things_csv['year'] == int(y)) & (important_things_csv['class'] == cm) & (important_things_csv['session'] == s)]['is_done'].tolist()
+            
+                if 'yes' in dones:
+                    continue
                 if s not in ['rac', 'spr']:
                     continue
                 list_of_seasion = os.listdir(f'{images_moto}/{cm}/{y}/{r}')
                 if s not in list_of_seasion:
                     os.mkdir(f'{images_moto}/{cm}/{y}/{r}/{s}')
                 if not os.path.exists(f"/home/boris/Documents/matplotlib_exercize/moto_pdfs/{cm}/{y}/{r}/{s}/Analysis.pdf"):
+                    
                     continue
                 drivers = f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/{cm}/{y}/{r}/{s}/entry.csv'
                 bikes = '/home/boris/Documents/matplotlib_exercize/all_drivers_with_colors.csv'
@@ -198,11 +198,16 @@ for cm in class_moto:
                     plt.tight_layout()
                     plt.savefig(f'{images_moto}/{cm}/{y}/{r}/{s}/violin_plot_{a_names[j]}.jpg')
                     j = j + 1
-
-            important_done.append('yes')
-            new_dict = {'race': important_races, 
-                        'is_done': important_done, 
-                        'year': important_years, 
-                        'class': important_classes}
-            new_df = pd.DataFrame(new_dict)
-            new_df.to_csv('/home/boris/Documents/matplotlib_exercize/done/box_violin.csv', index=False)
+                
+                important_done.append('yes')
+                important_sessions.append(s)
+                important_races.append(r)
+                important_years.append(y)
+                important_classes.append(cm)
+                new_dict = {'race': important_races, 
+                            'is_done': important_done, 
+                            'year': important_years, 
+                            'class': important_classes,
+                            'session': important_sessions}
+                new_df = pd.DataFrame(new_dict)
+                new_df.to_csv('/home/boris/Documents/matplotlib_exercize/done/box_violin.csv', index=False)

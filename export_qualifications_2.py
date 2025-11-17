@@ -174,10 +174,10 @@ for cm in class_moto:
                 plt.savefig(f"{images_moto}/{cm}/{y}/{r}/{s}/plot_first_ten.jpg")
                 plt.close()
 
-            important_done.append('yes')
-            new_dict = {'race': important_races, 
-                        'is_done': important_done, 
-                        'year': important_years, 
-                        'class': important_classes}
-            new_df = pd.DataFrame(new_dict)
-            new_df.to_csv('/home/boris/Documents/matplotlib_exercize/done/qualifications_2.csv', index=False)
+                important_done.append('yes')
+                new_dict = {'race': important_races, 
+                            'is_done': important_done, 
+                            'year': important_years, 
+                            'class': important_classes}
+                new_df = pd.DataFrame(new_dict)
+                new_df.to_csv('/home/boris/Documents/matplotlib_exercize/done/qualifications_2.csv', index=False)

@@ -42,7 +42,7 @@ LEVELUP - MTA,2024,moto3,#192594
 Red Bull GASGAS Tech3,2024,moto3,#B8500A
 Kopron Rivacold Snipers Team,2024,moto3,#4682B4
 FleetSafe Honda - MLav Racing,2024,moto3,#FF4500
-Liqui Moly Husqvarna Intact GP,2024,moto3,#D1002DB9
+Liqui Moly Husqvarna Intact GP,2024,moto3,#D1002D
 Leopard Racing,2024,moto3,#228B8B
 CIP Green Power,2024,moto3,#047504
 BOE Motorsports,2024,moto3,#125A12
@@ -97,11 +97,11 @@ CIP Green Power,2025,moto3,#047504
 Leopard Racing,2025,moto3,#228B8B
 CFMOTO Valresa Aspar Team,2025,moto3,#DC143C
 SIC58 Squadra Corse,2025,moto3,#FF1493
-LIQUI MOLY Dynavolt Intact GP,2025,moto3,#D1002DB9
+LIQUI MOLY Dynavolt Intact GP,2025,moto3,#D1002D
 Red Bull KTM Ajo,2025,moto3,#FF6600
 CFMOTO Gaviota Aspar Team,2025,moto3,#DC143C
 Angeluss - Mlav Racing,2025,moto3,#192594
-Liqui Moly Dynavolt Intact GP,2025,moto3,#D1002DB9
+Liqui Moly Dynavolt Intact GP,2025,moto3,#D1002D
 CFMOTO Viel Aspar Team,2025,moto3,#DC143C
 Ioda Team Italia,2012,moto3,#192594
 Team Italia FMI,2012,moto3,#192594
@@ -351,8 +351,8 @@ CFMOTO Racing PruestelGP,2023,moto3,#DC143C
 Angeluss MTA Team,2023,moto3,#192594
 Red Bull KTM Ajo,2023,moto3,#FF6600
 Honda Team Asia,2023,moto3,#FF4500
-Liqui Moly Husqvarna Intact GP,2023,moto3,#D1002DB9
-Finetwork Intact GP,2023,moto3,#D1002DB9
+Liqui Moly Husqvarna Intact GP,2023,moto3,#D1002D
+Finetwork Intact GP,2023,moto3,#D1002D
 Gaviota GASGAS Aspar M3,2023,moto3,#B8500A
 Valresa GASGAS Aspar Team,2023,moto3,#B8500A
 Yamaha Thailand Racing - BOE,2023,moto3,#0066CC
@@ -452,7 +452,7 @@ Italtrans Racing Team,2017,moto2,#074907
 Kiefer Racing,2017,moto2,#800080
 Forward Racing Team,2017,moto2,#4169E1
 Federal Oil Gresini Moto2,2017,moto2,#4169E1
-Dynavolt Intact GP,2017,moto2,#D1002DB9
+Dynavolt Intact GP,2017,moto2,#D1002D
 CarXpert Interwetten,2017,moto2,#FF8C00
 Tasca Racing Scuderia Moto2,2017,moto2,#0000FF
 AGR Team,2017,moto2,#DC143C
@@ -482,7 +482,7 @@ Italtrans Racing Team,2024,moto2,#074907
 KLINT Forward Factory Team,2024,moto2,#4169E1
 Elf Marc VDS Racing Team,2024,moto2,#FFD700
 Red Bull KTM Ajo,2024,moto2,#FF6600
-Liqui Moly Husqvarna Intact GP,2024,moto2,#D1002DB9
+Liqui Moly Husqvarna Intact GP,2024,moto2,#D1002D
 OnlyFans American Racing Team,2024,moto2,#B22222
 QJMOTOR Gresini Moto2,2024,moto2,#4169E1
 Team Ciatti Boscoscuro,2024,moto2,#0000FF
@@ -505,7 +505,7 @@ CFMOTO Asterius Aspar Team,2024,moto2,#DC143C
 Sports-Millions-EMWE-SAG,2016,moto2,#0000FF
 Ajo Motorsport,2016,moto2,#0000FF
 Forward Team,2016,moto2,#4169E1
-Dynavolt Intact GP,2016,moto2,#D1002DB9
+Dynavolt Intact GP,2016,moto2,#D1002D
 Garage Plus Interwetten,2016,moto2,#FF8C00
 IDEMITSU Honda Team Asia,2016,moto2,#FF4500
 QMMF Racing Team SPEED,2016,moto2,#0000FF
@@ -541,7 +541,7 @@ Beta Tools SpeedRS Team,2025,moto2,#0000FF
 BLU CRU Pramac Yamaha Moto2,2025,moto2,#0066CC
 ITALJET Gresini Moto2,2025,moto2,#4169E1
 Onlyfans American Racing Team,2025,moto2,#B22222
-LIQUI MOLY Dynavolt Intact GP,2025,moto2,#D1002DB9
+LIQUI MOLY Dynavolt Intact GP,2025,moto2,#D1002D
 CFMOTO Gaviota Aspar Team,2025,moto2,#DC143C
 Red Bull KTM Ajo,2025,moto2,#FF6600
 Idemitsu Honda Team Asia,2025,moto2,#FF4500
@@ -554,7 +554,7 @@ CFMOTO Inde Aspar Team,2025,moto2,#DC143C
 Andifer ART,2025,moto2,#0000FF
 Beta Tools - Boscoscuro,2025,moto2,#0000FF
 OnlyFans American Racing Team,2025,moto2,#B22222
-Liqui Moly Dynavolt Intact GP,2025,moto2,#D1002DB9
+Liqui Moly Dynavolt Intact GP,2025,moto2,#D1002D
 CFMOTO Power Electronics Aspar Team,2025,moto2,#DC143C
 Sync SpeedRS Team,2025,moto2,#0000FF
 AGR Team Fusport,2025,moto2,#DC143C
@@ -614,7 +614,7 @@ MV Agusta Forward Racing MV,2021,moto2,#4169E1
 Federal Oil Gresini Moto2,2021,moto2,#4169E1
 Pertamina Mandalika SAG Team,2021,moto2,#FF8C00
 SKY Racing Team VR46,2021,moto2,#95A003
-Liqui Moly Intact GP,2021,moto2,#D1002DB9
+Liqui Moly Intact GP,2021,moto2,#D1002D
 Italtrans Racing Team,2021,moto2,#074907
 Elf Marc VDS Racing Team,2021,moto2,#FFD700
 Red Bull KTM Ajo,2021,moto2,#FF6600
@@ -639,7 +639,7 @@ Flexbox HP 40,2020,moto2,#0000FF
 +EGO Speed Up SPEED,2020,moto2,#DC143C
 SKY Racing Team VR46,2020,moto2,#95A003
 Federal Oil Gresini Moto2,2020,moto2,#4169E1
-Liqui Moly Intact GP,2020,moto2,#D1002DB9
+Liqui Moly Intact GP,2020,moto2,#D1002D
 Tennor American Racing,2020,moto2,#B22222
 Italtrans Racing Team,2020,moto2,#074907
 "EG 0,0 Marc VDS",2020,moto2,#FFD700
@@ -669,7 +669,7 @@ AirAsia Caterham,2014,moto2,#0000FF
 Gresini Moto2,2014,moto2,#4169E1
 AGT REA Racing,2014,moto2,#0000FF
 APH PTT The Pizza SAG,2014,moto2,#0000FF
-Dynavolt Intact GP,2014,moto2,#D1002DB9
+Dynavolt Intact GP,2014,moto2,#D1002D
 Interwetten Paddock Moto2,2014,moto2,#FF8C00
 Mapfre Aspar Team Moto2,2014,moto2,#DC143C
 Federal Oil Gresini Moto2,2014,moto2,#4169E1
@@ -710,7 +710,7 @@ Team Stylobike,2018,moto2,#0000FF
 + Ego Speed Up Racing SPEED,2018,moto2,#DC143C
 Tasca Racing Scuderia Moto2,2018,moto2,#0000FF
 Swiss Innovative Investors,2018,moto2,#0000FF
-Dynavolt Intact GP,2018,moto2,#D1002DB9
+Dynavolt Intact GP,2018,moto2,#D1002D
 Forward Racing Team,2018,moto2,#4169E1
 "EG 0,0 Marc VDS",2018,moto2,#FFD700
 Red Bull KTM Ajo,2018,moto2,#FF6600
@@ -737,7 +737,7 @@ Technomag carXpert,2013,moto2,#0000FF
 Came Iodaracing Project,2013,moto2,#0000FF
 Gino Rea Montaze Broz Racin,2013,moto2,#0000FF
 Thai Honda PTT Gresini Moto,2013,moto2,#FF4500
-Dynavolt Intact GP,2013,moto2,#D1002DB9
+Dynavolt Intact GP,2013,moto2,#D1002D
 Interwetten Paddock Moto2 R,2013,moto2,#FF8C00
 NGM Mobile Forward Racing,2013,moto2,#4169E1
 Argiñano & Gines Racing,2013,moto2,#0000FF
@@ -784,7 +784,7 @@ Monster Yamaha Tech 3,2013,moto2,#0066CC
 Yamaha Factory Racing,2013,moto2,#0066CC
 Paul Bird Motorsport,2013,moto2,#696969
 Attack Performance Racing,2013,moto2,#FF4500
-Liqui Moly Husqvarna Intact GP,2023,moto2,#D1002DB9
+Liqui Moly Husqvarna Intact GP,2023,moto2,#D1002D
 Forward Team,2023,moto2,#4169E1
 Correos Prepago Yamaha VR46 Maste,2023,moto2,#0066CC
 Fieten Olie Racing GP,2023,moto2,#0000FF
@@ -820,7 +820,7 @@ Italtrans Racing Team,2019,moto2,#074907
 FLEXBOX HP 40,2019,moto2,#0000FF
 +Ego Speed Up SPEED,2019,moto2,#DC143C
 SKY Racing Team VR46,2019,moto2,#95A003
-Dynavolt Intact GP,2019,moto2,#D1002DB9
+Dynavolt Intact GP,2019,moto2,#D1002D
 American Racing KTM,2019,moto2,#FF6600
 Sama Qatar Angel Nieto Team,2019,moto2,#0000FF
 Honda Team Asia,2019,moto2,#FF4500
@@ -855,7 +855,7 @@ Mooney VR46 Racing Team,2022,moto2,#95A003
 Italtrans Racing Team,2022,moto2,#074907
 Yamaha VR46 Master Camp Team,2022,moto2,#0066CC
 +Ego Speed Up,2022,moto2,#DC143C
-Liqui Moly Intact GP,2022,moto2,#D1002DB9
+Liqui Moly Intact GP,2022,moto2,#D1002D
 MV Agusta Forward Racing MV,2022,moto2,#4169E1
 Pertamina Mandalika SAG Team,2022,moto2,#FF8C00
 IDEMITSU Honda Team Asia,2022,moto2,#FF4500
@@ -877,7 +877,7 @@ JIR Racing Team,2015,moto2,#0000FF
 Ajo Motorsport,2015,moto2,#0000FF
 Pons Racing Junior Team,2015,moto2,#FF1493
 APH PTT The Pizza SAG,2015,moto2,#0000FF
-Dynavolt Intact GP,2015,moto2,#D1002DB9
+Dynavolt Intact GP,2015,moto2,#D1002D
 Derendinger Racing Interwett,2015,moto2,#0000FF
 Federal Oil Gresini Moto2,2015,moto2,#4169E1
 Italtrans Racing Team,2015,moto2,#074907
@@ -1022,7 +1022,7 @@ Flexbox HP 40,2020,motogp,#FF0000
 Beta Tools Speed Up SPEED,2020,motogp,#DC143C
 SKY Racing Team VR46,2020,motogp,#95A003
 Federal Oil Gresini Moto2,2020,motogp,#4169E1
-Liqui Moly Intact GP,2020,motogp,#D1002DB9
+Liqui Moly Intact GP,2020,motogp,#D1002D
 American Racing,2020,motogp,#B22222
 Italtrans Racing Team,2020,motogp,#074907
 "EG 0,0 Marc VDS",2020,motogp,#FFD700
@@ -1103,7 +1103,7 @@ Monster Energy Yamaha MotoGP Tea,2023,motogp,#0066CC
 RNF MotoGP Team,2023,motogp,#FF0000
 Yamaha Factory,2023,motogp,#0066CC
 Tech3 GASGAS Factory Racing,2023,motogp,#B8500A
-Liqui Moly Husqvarna Intact GP,2023,motogp,#D1002DB9
+Liqui Moly Husqvarna Intact GP,2023,motogp,#D1002D
 American Racing,2023,motogp,#B22222
 Pons Wegow Los40,2023,motogp,#FF1493
 QJMOTOR Gresini Moto2,2023,motogp,#4169E1
@@ -1159,7 +1159,7 @@ Gresini Racing Moto2,2022,motogp,#4169E1
 Elf Marc VDS Racing Team,2022,motogp,#FFD700
 Italtrans Racing Team,2022,motogp,#074907
 Yamaha VR46 Master Camp Team,2022,motogp,#0066CC
-Liqui Moly Intact GP,2022,motogp,#D1002DB9
+Liqui Moly Intact GP,2022,motogp,#D1002D
 MV Agusta Forward Racing MV,2022,motogp,#4169E1
 IDEMITSU Honda Team Asia,2022,motogp,#FF4500
 Red Bull KTM Ajo,2022,motogp,#FF6600
