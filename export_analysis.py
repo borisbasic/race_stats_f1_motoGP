@@ -53,12 +53,10 @@ for cm in class_moto:
     important_classes = important_things_csv['class'].tolist()
     important_sessions = important_things_csv['session'].tolist()
     important_done = important_things_csv['is_done'].tolist()
-    if cm not in ['motogp', 'moto2', 'moto3']:
-        continue
     year = os.listdir(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/{cm}')
     for y in year:
-        #if y not in ['2025']:
-        #    continue
+        if y not in ['2026']:
+            continue
         list_of_year = os.listdir(f'{images_moto}/{cm}')
         if y not in list_of_year:
             os.mkdir(f'{images_moto}/{cm}/{y}')
@@ -73,10 +71,10 @@ for cm in class_moto:
             seasion = os.listdir(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/{cm}/{y}/{r}')
             for s in seasion:
                 dones = important_things_csv[(important_things_csv['race'] == r) & (important_things_csv['year'] == int(y)) & (important_things_csv['class'] == cm) & (important_things_csv['session'] == s)]['is_done'].tolist()
-            
+                
                 if 'yes' in dones:
                     continue
-
+                print(r)
                 list_of_seasion = os.listdir(f'{images_moto}/{cm}/{y}/{r}')
                 if s not in list_of_seasion:
                     os.mkdir(f'{images_moto}/{cm}/{y}/{r}/{s}')
@@ -102,10 +100,10 @@ for cm in class_moto:
                             page_width = first_page.width
                             page_height = first_page.height
 
-                            crop_box = (0, 0, page_width / 2 + 10, page_height-120)
+                            crop_box = (0, 0, page_width / 2 + 5, page_height - 112)
                             cropped_page = first_page.within_bbox(crop_box)
 
-                            crop_box_ = (page_width / 2 + 10, 0, page_width , page_height-120)
+                            crop_box_ = (page_width / 2 + 5, 0, page_width, page_height - 112)
                             cropped_page_ = first_page.within_bbox(crop_box_) 
                             text = cropped_page.extract_text()
                             text_ = cropped_page_.extract_text()
@@ -158,7 +156,7 @@ for cm in class_moto:
                 for i in range(len(all_text)):
                     data = all_text[i].split(' ')
                     for d in drivers:
-                        if d[:-1] in all_text[i]:
+                        if d[:-2] in all_text[i]:
                             dr = d
                             col_ind = drivers.index(dr)
                             dn = data[1]
@@ -307,6 +305,7 @@ for cm in class_moto:
                                                                     nickname=rider_nickname,
                                                                     country=rider_country
                         )
+                        
                         with engine.connect() as conn:
                             result = conn.execute(insert_stmt)
                             conn.commit()
@@ -330,3 +329,7 @@ for cm in class_moto:
 
                 #except:
                 #    continue
+
+
+import transfer_images
+transfer_images.sync_motoslicks_images()

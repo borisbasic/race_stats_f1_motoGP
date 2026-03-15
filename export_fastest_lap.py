@@ -8,6 +8,20 @@ import matplotlib.image as mpimg
 from matplotlib.patches import FancyBboxPatch
 sns.set_theme()
 plt.style.use('ggplot')
+
+def to_real_time(t):
+    new_time = str(t)
+    minutes = int(new_time.split('.')[0])//60
+    seconds = int(new_time.split('.')[0])%60
+    miliseconds = int(new_time.split('.')[1])
+    if seconds < 10:
+        seconds = f'0{seconds}'
+    if miliseconds < 10:
+        miliseconds = f'00{miliseconds}'
+    elif miliseconds < 100:
+        miliseconds = f'0{miliseconds}'
+    return f'{minutes}:{seconds}.{miliseconds}'
+
 background = '/home/boris/Downloads/b3b9110aa41ab877323a5041802d3f4e.jpg'
 from sqlalchemy import create_engine, insert, Table, MetaData, select, and_
 engine = create_engine("mariadb+mariadbconnector://root:boris123@localhost:3306/motogp")
@@ -110,6 +124,7 @@ for cm in class_moto:
                         
                         help['yes'] = help.apply(equal_time, axis=1)
                         help = help[help['yes'] == 'yes']
+                        help = help[help['p_in'] == 'no']
                     except:
                         continue
                     
@@ -156,7 +171,6 @@ for cm in class_moto:
                     'sector_4': fs_4,
                     'sector_4_driver': fs_4_driver
                 }
-                print(fs_1, fs_2, fs_3, fs_4, lap_time)
                 #if any(x==pd.nan for x in )
                 fastest_lap_df = pd.DataFrame([fastets_lap_dict])
                 fastest_lap_df.to_csv(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/{cm}/{y}/{r}/{s}/fastest_lap.csv', index=False)
@@ -184,7 +198,8 @@ for cm in class_moto:
                     conn.commit()
 
 
-                fig, ax = plt.subplots(figsize=(15, 9))  
+                fig, ax = plt.subplots(figsize=(15, 9), facecolor="#1a1a1a")  
+                ax.set_facecolor('#1a1a1a')
                 ax.set_xlim(0, lap_time+0.5)
                 ax.set_ylim(0, 5)
                 
@@ -244,14 +259,57 @@ for cm in class_moto:
                 ax.axis('off')
                 bg = mpimg.imread(background)
                 plt.imshow(bg, extent=[-0.5, lap_time+0.5, -0.5, 5.5], aspect='auto', alpha=0.3)
-                plt.text(lap_time/2, 3.5, f'Fastest Lap: {lap_time} seconds', fontweight='bold', fontsize=20, color="black", va='center', ha='center', clip_on=True )
-                plt.text(lap_time/2, 1, f'Race: {r} {y} \nSession: {s} \n{cm.upper()}', fontweight='bold', fontsize=20, color="black", ha='center', va='center',clip_on=True )
-                plt.text(fs_1 / 2, 2.5, f'Sector 1 \n {fs_1} s\n{fs_1_driver}', fontweight='bold', color='white', fontsize=12, ha='center', va='center')
-                plt.text(fs_1 + fs_2 / 2, 2.5, f'Sector 2\n {fs_2} s\n{fs_2_driver}',fontweight='bold', color='white', fontsize=12, ha='center', va='center')  
-                plt.text(fs_1 + fs_2 + fs_3 / 2, 2.5, f'Sector 3\n {fs_3} s\n{fs_3_driver}',fontweight='bold', color='white', fontsize=12, ha='center', va='center')
-                plt.text(fs_1 + fs_2 + fs_3 + fs_4 / 2, 2.5, f'Sector 4\n {fs_4} s\n{fs_4_driver}',fontweight='bold', color='white', fontsize=12, ha='center', va='center')
+                plt.text(lap_time/2, 3.5, f'Fastest Lap: {to_real_time(lap_time)}', fontweight='bold', fontsize=20, color="black", va='center', ha='center', clip_on=True,
+                         bbox=dict(
+                                    boxstyle="round,pad=0.4",       
+                                    edgecolor="white",     
+                                    color="#ffffff",    
+                                    linewidth=2.5,             
+                                    alpha=0.8                  
+                                ) )
+                plt.text(lap_time/2, 1, f'Race: {r} {y} \nSession: {s} \n{cm.upper()}', fontweight='bold', fontsize=20, color="black", ha='center', va='center',clip_on=True ,
+                         bbox=dict(
+                                    boxstyle="round,pad=0.4",       
+                                    edgecolor="white",  
+                                    color='#ffffff',       
+                                    linewidth=1.5,             
+                                    alpha=0.8                  
+                                ))
+                plt.text(fs_1 / 2, 2.5, f'Sector 1 \n {fs_1} s\n{fs_1_driver}', fontweight='bold', color='white', fontsize=12, ha='center', va='center',
+                         bbox=dict(
+                                    boxstyle="round,pad=0.4",       
+                                    edgecolor="white",    
+                                    color=color_1,     
+                                    linewidth=1.5,             
+                                    alpha=0.8                  
+                                ))
+                plt.text(fs_1 + fs_2 / 2, 2.5, f'Sector 2\n {fs_2} s\n{fs_2_driver}',fontweight='bold', color='white', fontsize=12, ha='center', va='center',
+                         bbox=dict(
+                                    boxstyle="round,pad=0.4",       
+                                    edgecolor="white",   
+                                    color=color_2,           
+                                    linewidth=1.5,             
+                                    alpha=0.8               
+                                ))  
+                plt.text(fs_1 + fs_2 + fs_3 / 2, 2.5, f'Sector 3\n {fs_3} s\n{fs_3_driver}',fontweight='bold', color='white', fontsize=12, ha='center', va='center',
+                         bbox=dict(
+                                    boxstyle="round,pad=0.4",       
+                                    edgecolor="white",  
+                                    color=color_3,            
+                                    linewidth=1.5,             
+                                    alpha=0.8                  
+                                ))
+                plt.text(fs_1 + fs_2 + fs_3 + fs_4 / 2, 2.5, f'Sector 4\n {fs_4} s\n{fs_4_driver}',fontweight='bold', color='white', fontsize=12, ha='center', va='center',
+                         bbox=dict(
+                                    boxstyle="round,pad=0.4",       
+                                    edgecolor="white",    
+                                    color=color_4,          
+                                    linewidth=1.5,             
+                                    alpha=0.8                  
+                                ))
+                plt.text(0.5, 0.1, f"motoslicks.com", fontweight='bold', fontsize=25, color="#FAF0F03A",)
                 plt.tight_layout()
-                plt.savefig(f"{images_moto}/{cm}/{y}/{r}/{s}/fastest_lap.jpg")
+                plt.savefig(f"{images_moto}/{cm}/{y}/{r}/{s}/fastest_lap.webp")
                 #plt.show()
                 plt.close()
                 important_done.append('yes')
@@ -266,3 +324,7 @@ for cm in class_moto:
                             'session': important_session}
                 new_df = pd.DataFrame(new_dict)
                 new_df.to_csv('/home/boris/Documents/matplotlib_exercize/done/fastest_lap.csv', index=False)
+
+
+import transfer_images
+transfer_images.sync_motoslicks_images()

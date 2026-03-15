@@ -54,8 +54,8 @@ for cm in class_moto:
         continue
     year = os.listdir(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/{cm}')
     for y in year:
-        if y not in ['2025']:
-            continue
+        #if y not in ['2025']:
+        #    continue
         list_of_year = os.listdir(f'{images_moto}/{cm}')
         if y not in list_of_year:
             os.mkdir(f'{images_moto}/{cm}/{y}')
@@ -74,7 +74,7 @@ for cm in class_moto:
             
                 if 'yes' in dones:
                     continue
-                if s not in ['rac', 'spr']:
+                if s not in ['rac', 'spr', 'rac2']:
                     continue
                 list_of_seasion = os.listdir(f'{images_moto}/{cm}/{y}/{r}')
                 if s not in list_of_seasion:
@@ -114,6 +114,7 @@ for cm in class_moto:
                 for d in drivers_:
                     try:
                         help = pd.read_csv(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/{cm}/{y}/{r}/{s}/{d}_analysis.csv')
+                        help = help[help['p_in'] == 'no']
                         if num_of_lap <= len(help):
                             num_of_lap = len(help)
                         
@@ -173,12 +174,14 @@ for cm in class_moto:
                                 left=fastest_laps['time_milisec'], color=fastest_laps['driver_color'])
                 l = mpathes.Patch(color=the_fastest_color,
                                 label=f'Fastest lap by {the_fastest.loc[0, "driver_name"]} - {the_fastest.loc[0, "real_time"]}')
-                plt.title('Fastest lap speed by driver')
+                plt.title('Fastest Time per Lap')
+
+                plt.text(0, 0.1, f"motoslicks.com", fontweight='bold', fontsize=25, color="#07050539",)
                 plt.ylabel('Laps')
-                plt.xlabel('Driver speed')
+                plt.xlabel('Racer lap time')
                 plt.tight_layout()
                 ax.legend(handles=[l], loc=(0,-0.08), fontsize=13)
-                plt.savefig(f'{images_moto}/{cm}/{y}/{r}/{s}/Fastest_Lap_By_lap.jpg')
+                plt.savefig(f'{images_moto}/{cm}/{y}/{r}/{s}/Fastest_Lap_By_lap.webp')
 
 
                 plt.close()
@@ -216,13 +219,15 @@ for cm in class_moto:
                 ax.barh(y=fastest_laps['lap'], alpha=0.4, edgecolor='black', width=fastest_laps['stacked_bar'], 
                                 left=fastest_laps['speed'], color=fastest_laps['driver_color'])
                 l = mpathes.Patch(color=the_fastest_color,
-                                label=f'Fastest driver by {the_fastest.loc[0, "driver_name"]} - {the_fastest.loc[0, "speed"]}')
-                plt.title('Fastest lap speed by driver')
+                                label=f'Fastest driver - {the_fastest.loc[0, "driver_name"]} - {the_fastest.loc[0, "speed"]}')
+                plt.title('Highest Speed per Lap')
                 plt.ylabel('Laps')
-                plt.xlabel('Driver speed')
+                plt.xlabel('Racer speed')
+
+                plt.text(0, 0.1, f"motoslicks.com", fontweight='bold', fontsize=25, color="#07050539",)
                 plt.tight_layout()
                 ax.legend(handles=[l], loc=(0,-0.08), fontsize=13)
-                plt.savefig(f'{images_moto}/{cm}/{y}/{r}/{s}/Fastest_Speed_By_lap.jpg')
+                plt.savefig(f'{images_moto}/{cm}/{y}/{r}/{s}/Fastest_Speed_By_lap.webp')
 
                 important_done.append('yes')
                 important_races.append(r)
@@ -236,3 +241,6 @@ for cm in class_moto:
                             'session': important_session}
                 new_df = pd.DataFrame(new_dict)
                 new_df.to_csv('/home/boris/Documents/matplotlib_exercize/done/speed.csv', index=False)
+
+import transfer_images
+transfer_images.sync_motoslicks_images()

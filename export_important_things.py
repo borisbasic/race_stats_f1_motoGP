@@ -21,7 +21,7 @@ for cm in class_moto:
         continue
     year = os.listdir(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/{cm}')
     for y in year:
-        if y != '2025':
+        if y != '2026':
             continue
         list_of_year = os.listdir(f'{images_moto}/{cm}')
         if y not in list_of_year:
@@ -43,7 +43,7 @@ for cm in class_moto:
             important_classes.append(cm)
             seasion = os.listdir(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/{cm}/{y}/{r}')
             for s in seasion:
-                
+                print(f'{cm} {s}')
                 list_of_seasion = os.listdir(f'{images_moto}/{cm}/{y}/{r}')
                 if s not in list_of_seasion:
                     os.mkdir(f'{images_moto}/{cm}/{y}/{r}/{s}')
@@ -96,3 +96,7 @@ for cm in class_moto:
                         'class': important_classes}
             new_df = pd.DataFrame(new_dict)
             new_df.to_csv('/home/boris/Documents/matplotlib_exercize/done/important_things.csv', index=False)
+
+
+import transfer_images
+transfer_images.sync_motoslicks_images()

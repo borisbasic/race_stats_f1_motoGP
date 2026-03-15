@@ -39,7 +39,7 @@ for cm in class_moto:
         continue
     year = os.listdir(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/{cm}')
     for y in year:
-        if y not in ['2025']:#'2019', '2020', '2021', '2022', '2023', '2024']:
+        if y not in ['2026']:
             continue
         list_of_year = os.listdir(f'{images_moto}/{cm}')
         if y not in list_of_year:
@@ -62,7 +62,7 @@ for cm in class_moto:
             for s in seasion:
                 if s not in ['rac']:
                     continue
-
+                print(s)
                 race_import = select(races_all).where(and_(races_all.c.race == r,
                                                     races_all.c.year == int(y)))
                 with engine.connect() as conn:
@@ -88,6 +88,7 @@ for cm in class_moto:
                 except: 
                     continue
                 with pdfplumber.open(pdf_patg_final_results) as pdf:
+                    print(pdf_patg_final_results)
                     page = pdf.pages[0]
                     page_width = page.width
                     page_height = page.height
@@ -124,3 +125,6 @@ for cm in class_moto:
                         'class': important_classes}
             new_df = pd.DataFrame(new_dict)
             new_df.to_csv('/home/boris/Documents/matplotlib_exercize/done/img_date.csv', index=False)
+
+import transfer_images
+transfer_images.sync_motoslicks_images()

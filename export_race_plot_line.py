@@ -24,8 +24,8 @@ for cm in class_moto:
         continue
     year = os.listdir(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/{cm}')
     for y in year:
-        if y != '2025':
-            continue
+        #if y != '2025':
+        #    continue
         list_of_year = os.listdir(f'{images_moto}/{cm}')
         if y not in list_of_year:
             os.mkdir(f'{images_moto}/{cm}/{y}')
@@ -42,7 +42,7 @@ for cm in class_moto:
             
                 if 'yes' in dones:
                     continue
-                if s not in ['rac', 'spr']:
+                if s not in ['rac', 'spr', 'rac2']:
                     continue
                 list_of_seasion = os.listdir(f'{images_moto}/{cm}/{y}/{r}')
                 if s not in list_of_seasion:
@@ -187,9 +187,17 @@ for cm in class_moto:
                         plt.text(num_of_laps+1.2, to_plot[driver_to_plot][-1], drvier, fontsize=16,
                                     fontname='Ubuntu',
                                     color=color_of_driver_to_plot)
-                        plt.title(f'{r} {y} - {cm.upper()}', fontname='Ubuntu', fontweight='bold', fontsize=15)
+                        if s == 'rac':
+                            plt.title(f'{r} {y} (Race) - {cm.upper()}', fontname='Ubuntu', fontweight='bold', fontsize=15)
+                        elif s == 'spr':
+                            plt.title(f'{r} {y} (Sprint) - {cm.upper()}', fontname='Ubuntu', fontweight='bold', fontsize=15)
+                        elif s == 'rac2':
+                            plt.title(f'{r} {y} (Race 2) - {cm.upper()}', fontname='Ubuntu', fontweight='bold', fontsize=15)
+                
+                plt.text(0, 0.1, f"motoslicks.com", fontweight='bold', fontsize=25, color="#07050539",)
                 #mplcursors.cursor(hover=True)
-                plt.savefig(f'{images_moto}/{cm}/{y}/{r}/{s}/line_plot_all.jpg')
+                plt.savefig(f'{images_moto}/{cm}/{y}/{r}/{s}/line_plot_all.webp')
+                plt.close()
                 #plt.show()
 
                 important_done.append('yes')
@@ -204,3 +212,6 @@ for cm in class_moto:
                             'session': important_sessions}
                 new_df = pd.DataFrame(new_dict)
                 new_df.to_csv('/home/boris/Documents/matplotlib_exercize/done/race_plot_line.csv', index=False)
+
+import transfer_images
+transfer_images.sync_motoslicks_images()

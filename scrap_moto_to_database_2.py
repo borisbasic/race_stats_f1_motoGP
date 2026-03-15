@@ -1,82 +1,105 @@
 import os
 import time
-import requests
 import pandas as pd
-from selenium.webdriver.common.by import By
+import urllib.request
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-all_races = pd.read_csv('/home/boris/Documents/matplotlib_exercize/moto_pdfs/motogp/races_2025.csv')
+# 1. KONFIGURACIJA URLLIB OPENER-A (Ovo se radi jednom na početku)
+opener = urllib.request.build_opener()
+opener.addheaders = [
+    ('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'),
+    ('Referer', 'https://www.motogp.com/')
+]
+urllib.request.install_opener(opener)
+
+all_races = pd.read_csv('/home/boris/Documents/matplotlib_exercize/moto_pdfs/motogp/races_2026.csv')
 op = webdriver.FirefoxOptions()
 op.add_argument("--headless")
+
 for ind, row in all_races.iterrows():
-    ses = '2025'
+    ses = '2026'
     race = row['race']
     race_small = row['race_small']
     
-    print(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/motogp/{ses}/{race}/rac/Anaylsis.pdf')
-    list_of_races = os.listdir(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/moto3/{ses}')
-    if not os.path.exists(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/moto3/{ses}/{race}'):
-        os.mkdir(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/moto3/{ses}/{race}')
-    if os.path.exists(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/motogp/{ses}/{race}/rac/Analysis.pdf'):
+    # Putanja do foldera za trku
+    race_dir = f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/moto3/{ses}/{race}'
+    os.makedirs(race_dir, exist_ok=True)
+
+    # Provera da li već postoji Analysis.pdf (preskačemo ako je gotovo)
+    # Putanja je ovde ostala motogp kao u tvom originalu, proveri da li treba moto3
+    check_path = f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/motogp/{ses}/{race}/rac/Analysis.pdf'
+    if os.path.exists(check_path):
         continue
+
     url = f'https://www.motogp.com/en/gp-results/{ses}/{race_small}/moto3/rac/classification'
-    if not os.path.exists(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/moto3/{ses}'):
-        os.mkdir(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/moto3/{ses}')
     driver = webdriver.Firefox(options=op)
     driver.get(url)
-    try:
-        btn =  WebDriverWait(driver, 10).until(EC.presence_of_element_located(
-            (By.ID, 'onetrust-pc-btn-handler')))
-        btn.click()
-        time.sleep(3)
-        confirm = WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.CLASS_NAME, 'ot-btn-container')))
-        confirm_button = WebDriverWait(confirm[0], 10).until(EC.presence_of_all_elements_located(
-            (By.TAG_NAME, 'button')))
 
-        confirm_button[1].click()
+    # Cookie Bypass
+    try:
+        btn = WebDriverWait(driver, 7).until(EC.element_to_be_clickable((By.ID, 'onetrust-accept-btn-handler')))
+        btn.click()
+        time.sleep(2)
     except:
         pass
 
-    shifts = WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located(
-        (By.CLASS_NAME, 'primary-filter__filter-container')))
-    races = shifts[2]
+    try:
+        # Pronalaženje filtera za sesije
+        shifts = WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.CLASS_NAME, 'primary-filter__filter-container')))
+        session_filter = shifts[4]
+        options = session_filter.find_elements(By.TAG_NAME, 'option')
+        session_data = [(o.get_attribute('value'), o.text) for o in options]
+    except Exception as e:
+        print(f"Greška pri dohvatanju sesija za {race}: {e}")
+        driver.quit()
+        continue
 
-    dict_races = {
-        'races': [],
-        'session': []
-    }
-    session = shifts[4]
-    opt = WebDriverWait(session, 10).until(EC.presence_of_all_elements_located(
-        (By.TAG_NAME, 'option')))
-    for o in opt:
-        dict_races['session'].append((o.get_attribute('value'), o.text))
-
-    for s in dict_races['session']:
+    for s_val, s_text in session_data:
+        # Otvaranje svake sesije u novom tabu
         driver.execute_script("window.open('');")
         driver.switch_to.window(driver.window_handles[-1])
-        driver.get(f'https://www.motogp.com/en/gp-results/{ses}/{race_small}/moto3/{s[0]}/classification')
+        driver.get(f'https://www.motogp.com/en/gp-results/{ses}/{race_small}/moto3/{s_val}/classification')
+
+        # Kreiranje foldera za sesiju (npr. RAC, P1, P2...)
+        session_dir = os.path.join(race_dir, s_val)
+        os.makedirs(session_dir, exist_ok=True)
+
         try:
-            pdfs_cont = WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located(
-                (By.CLASS_NAME, 'pdf-table__container')))
-        except:
-            driver.close()
-            continue
-        btns = WebDriverWait(pdfs_cont[0], 10).until(EC.presence_of_all_elements_located(
-            (By.TAG_NAME, 'button')))
-        
-        if not os.path.exists(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/moto3/{ses}/{race}/{s[0]}'):
-            os.mkdir(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/moto3/{ses}/{race}/{s[0]}')
-        list_of_folders = ['session_results', 'championship_results', 'event_results']
-        i = 0
-        pdfs = WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located(
-            (By.CLASS_NAME, 'pdf-table__table-row')))
-        for p in pdfs:
-            req = requests.get(p.get_attribute('href'), stream=True)
-            name_file = p.get_attribute('href').split('?')[0].split('/')[-1]
-            with open(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/moto3/{ses}/{race}/{s[0]}/{name_file}', 'wb') as file:
-                file.write(req.content)
+            # Čekamo PDF tabelu da se pojavi
+            WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, 'pdf-table__table-row')))
+            
+            # Uzimamo sve href linkove odmah
+            pdf_elements = driver.find_elements(By.CLASS_NAME, 'pdf-table__table-row')
+            links = [el.get_attribute('href') for el in pdf_elements if el.get_attribute('href')]
+
+            for pdf_url in links:
+                name_file = pdf_url.split('?')[0].split('/')[-1]
+                full_path = os.path.join(session_dir, name_file)
+
+                print(f"Skidam preko urllib: {name_file} ({s_text})")
+                
+                # URLLIB DOWNLOAD
+                try:
+                    urllib.request.urlretrieve(pdf_url, full_path)
+                    
+                    # Provera da li je Entry.pdf skinut kako treba (ako je manji od 2KB, verovatno je greška)
+                    if "Entry.pdf" in name_file and os.path.getsize(full_path) < 2000:
+                        print(f"Ponovni pokušaj za {name_file}...")
+                        time.sleep(2)
+                        urllib.request.urlretrieve(pdf_url, full_path)
+                except Exception as download_error:
+                    print(f"Greška pri skidanju {name_file}: {download_error}")
+
+        except Exception as e:
+            print(f"Nema PDF-ova za sesiju {s_text}")
+
         driver.close()
         driver.switch_to.window(driver.window_handles[0])
-    driver.close()
+
+    driver.quit()
+
+import transfer_images
+transfer_images.sync_motoslicks_images()

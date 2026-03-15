@@ -23,8 +23,8 @@ for cm in class_moto:
         continue
     year = os.listdir(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/{cm}')
     for y in year:
-        if y not in ['2025']:
-            continue
+        #if y not in ['2025']:
+        #    continue
         list_of_year = os.listdir(f'{images_moto}/{cm}')
         if y not in list_of_year:
             os.mkdir(f'{images_moto}/{cm}/{y}')
@@ -114,7 +114,7 @@ for cm in class_moto:
                         dr_c.append("#693B116C")
                 
                 dri_dict = {'driver': dri, 'time': dri_time, 'team': dri_team, 'color': dr_c}
-                fig, ax = plt.subplots(figsize =(12, 9), facecolor="#eaeaea7b")
+                fig, ax = plt.subplots(figsize =(12, 9), facecolor="#1a1a1a")
 
                 ticks = []
                 ticksx = [0, 1, 2, 3, 4]
@@ -127,7 +127,7 @@ for cm in class_moto:
 
                 ax.xaxis.set_ticks(ticks=ticksx, labels=[f'{i}' for i in ticksx], fontweight='bold', fontname='Ubuntu',
                                 fontsize=15,)
-                ax.set_facecolor("#eaeaea7b")
+                ax.set_facecolor('#1a1a1a')
                     
                 img = mpimg.imread(img_moto)
                 image_box = OffsetImage(img, zoom=0.1)
@@ -142,8 +142,8 @@ for cm in class_moto:
                     minus = 0.75
                 
                 ax.axis('off')
-                bg = mpimg.imread(background)
-                plt.imshow(bg, extent=[-0.5, 4.5, -0.5, 10+1.5], aspect='auto', alpha=0.6)
+                #bg = mpimg.imread(background)
+                #plt.imshow(bg, extent=[-0.5, 4.5, -0.5, 10+1.5], aspect='auto', alpha=0.6)
                 num_of_dri = 0
                 max_milis = dri_milis[0]
                 dis = 0.3
@@ -167,17 +167,24 @@ for cm in class_moto:
                     r3 = ' '.join(r11) + '\n' + ' '.join(r12)
                 else:
                     r3 = r
-                plt.text(3.9, 2, f"{cm.upper()} - {r3} \n QUALIFICATION ", rotation=90, ha='center', fontweight='bold', fontsize=25, color="#1110103B", clip_on=True )
+                ax.axvline(x=1.12, color='white', linestyle='-', linewidth=10)
+                ax.text(0.9, 5.5, 'FINISH LINE', zorder=-1, ha='center', va='center', fontweight='bold', rotation=90, fontsize=50, color="white",)
+                ax.axvline(x=0.65, color='white', linestyle='-', linewidth=10)
+                plt.text(1.5, 0.1, f"motoslicks.com", fontweight='bold', fontsize=25, color="#FAF0F03A",)
+                plt.text(3.6, 2.2, f"{cm.upper()} - {r3} \n QUALIFICATION ", rotation=90, fontweight='bold', fontsize=25, color="#FAF0F03A", clip_on=True )
                 #plt.title('Fastest lap speed by driver')
                 plt.tight_layout()
                 #plt.show()
-                plt.savefig(f"{images_moto}/{cm}/{y}/{r}/{s}/plot_first_ten.jpg")
+                plt.savefig(f"{images_moto}/{cm}/{y}/{r}/{s}/plot_first_ten.webp")
                 plt.close()
 
-                important_done.append('yes')
-                new_dict = {'race': important_races, 
-                            'is_done': important_done, 
-                            'year': important_years, 
-                            'class': important_classes}
-                new_df = pd.DataFrame(new_dict)
-                new_df.to_csv('/home/boris/Documents/matplotlib_exercize/done/qualifications_2.csv', index=False)
+            important_done.append('yes')
+            new_dict = {'race': important_races, 
+                        'is_done': important_done, 
+                        'year': important_years, 
+                        'class': important_classes}
+            new_df = pd.DataFrame(new_dict)
+            new_df.to_csv('/home/boris/Documents/matplotlib_exercize/done/qualifications_2.csv', index=False)
+
+import transfer_images
+transfer_images.sync_motoslicks_images()

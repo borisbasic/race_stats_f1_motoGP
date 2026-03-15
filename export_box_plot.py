@@ -30,8 +30,8 @@ for cm in class_moto:
         continue
     year = os.listdir(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/{cm}')
     for y in year:
-        if y != '2025':
-            continue
+        #if y != '2012':
+        #    continue
         list_of_year = os.listdir(f'{images_moto}/{cm}')
         if y not in list_of_year:
             os.mkdir(f'{images_moto}/{cm}/{y}')
@@ -49,7 +49,7 @@ for cm in class_moto:
             
                 if 'yes' in dones:
                     continue
-                if s not in ['rac', 'spr']:
+                if s not in ['rac', 'spr', 'rac2']:
                     continue
                 list_of_seasion = os.listdir(f'{images_moto}/{cm}/{y}/{r}')
                 if s not in list_of_seasion:
@@ -156,7 +156,12 @@ for cm in class_moto:
                     
                     for patch, color in zip(bplot['boxes'], dr_c):
                         patch.set_facecolor(color)
-
+                    if s == 'rac':
+                        plt.title(f'{r} {y} (RACE) - {a_names[j].upper()}', fontweight='bold', fontsize='15')
+                    elif s == 'spr':
+                        plt.title(f'{r} {y} (SPRINT) - {a_names[j].upper()}', fontweight='bold', fontsize='15')
+                    elif s == 'rac2':
+                        plt.title(f'{r} {y} (RACE 2) - {a_names[j].upper()}', fontweight='bold', fontsize='15')
                     plt.xticks(ticks=xticks, labels=[f'{dri[x-1].split(" ")[0][0]}. {dri[x-1].split(" ")[1]}' for x in xticks], rotation='vertical', fontweight='bold', fontname='Ubuntu',
                                             fontsize=15,)
                     plt.yticks(ticks=ticks, labels=[f'{l} s' for l in ticks], fontweight='bold', fontname='Ubuntu',
@@ -166,8 +171,12 @@ for cm in class_moto:
                                             fontsize=15,)
                     plt.ylabel('Times', fontweight='bold', fontname='Ubuntu',
                                             fontsize=15,)
+                    
+                    plt.text(0.1, 1, f"motoslicks.com", fontweight='bold', fontsize=12, color="#14111139", 
+                             transform=ax.transAxes, zorder=0)
                     plt.tight_layout()
-                    plt.savefig(f'{images_moto}/{cm}/{y}/{r}/{s}/box_plot_{a_names[j]}.jpg')
+                    plt.savefig(f'{images_moto}/{cm}/{y}/{r}/{s}/box_plot_{a_names[j]}.webp')
+                    plt.close()
 
 
                     fig, ax = plt.subplots(figsize=(15, 9))
@@ -186,6 +195,12 @@ for cm in class_moto:
                         patch.set_alpha(0.6)
                         patch.set_edgecolor('black')
                         i = i + 1
+                    if s == 'rac':
+                        plt.title(f'{r} {y} (RACE) - {a_names[j].upper()}', fontweight='bold', fontsize='15')
+                    elif s == 'spr':
+                        plt.title(f'{r} {y} (SPRINT) - {a_names[j].upper()}', fontweight='bold', fontsize='15')
+                    elif s == 'rac2':
+                        plt.title(f'{r} {y} (RACE 2) - {a_names[j].upper()}', fontweight='bold', fontsize='15')
                     plt.xticks(ticks=xticks, labels=[f'{dri[x-1].split(" ")[0][0]}. {dri[x-1].split(" ")[1]}' for x in xticks], rotation='vertical', fontweight='bold', fontname='Ubuntu',
                                             fontsize=15,)
                     plt.yticks(ticks=ticks, labels=[f'{l} s' for l in ticks], fontweight='bold', fontname='Ubuntu',
@@ -195,8 +210,11 @@ for cm in class_moto:
                                             fontsize=15,)
                     plt.ylabel('Times', fontweight='bold', fontname='Ubuntu',
                                             fontsize=15,)
+                    plt.text(0.1, 1, f"motoslicks.com", fontweight='bold', fontsize=12, color="#14111139", 
+                             transform=ax.transAxes, zorder=0)
                     plt.tight_layout()
-                    plt.savefig(f'{images_moto}/{cm}/{y}/{r}/{s}/violin_plot_{a_names[j]}.jpg')
+                    plt.savefig(f'{images_moto}/{cm}/{y}/{r}/{s}/violin_plot_{a_names[j]}.webp')
+                    plt.close()
                     j = j + 1
                 
                 important_done.append('yes')
@@ -211,3 +229,6 @@ for cm in class_moto:
                             'session': important_sessions}
                 new_df = pd.DataFrame(new_dict)
                 new_df.to_csv('/home/boris/Documents/matplotlib_exercize/done/box_violin.csv', index=False)
+
+import transfer_images
+transfer_images.sync_motoslicks_images()

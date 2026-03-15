@@ -22,8 +22,8 @@ for cm in class_moto:
         continue
     year = os.listdir(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/{cm}')
     for y in year:
-        if y not in ['2025']:
-            continue
+        #if y not in ['2025']:
+        #    continue
         list_of_year = os.listdir(f'{images_moto}/{cm}')
         if y not in list_of_year:
             os.mkdir(f'{images_moto}/{cm}/{y}')
@@ -106,8 +106,8 @@ for cm in class_moto:
                         dr_c.append("#693B116C")
                 
                 dri_dict = {'driver': dri, 'time': dri_time, 'team': dri_team, 'color': dr_c}
-                fig, ax = plt.subplots(figsize =(12, 9), facecolor="#eaeaea7b")
-
+                fig, ax = plt.subplots(figsize =(12, 9), facecolor="#ddd9d9")
+                ax.set_facecolor('#ddd9d9')
                 num_of_rows = int(len(dri)/3) + 1
 
                 ticks = []
@@ -121,7 +121,7 @@ for cm in class_moto:
 
                 ax.xaxis.set_ticks(ticks=ticksx, labels=[f'{i}' for i in ticksx], fontweight='bold', fontname='Ubuntu',
                                 fontsize=15,)
-                ax.set_facecolor("#eaeaea7b")
+                #ax.set_facecolor("#eaeaea7b")
                     
                 img = mpimg.imread(img_moto)
                 if num_of_rows % 2 == 0:
@@ -132,29 +132,45 @@ for cm in class_moto:
                 num_of_dri = 0
                 if len(dri) > 26:
                     minus = 0.85
+                    line_minus = 0.86
+                    vline_minus = 0.17
                 elif len(dri) > 23:
                     minus = 0.75
+                    line_minus = 0.81
+                    vline_minus = 0.18
                 elif len(dri) > 20:
                     minus = 0.65
+                    line_minus = 0.79
+                    vline_minus = 0.18
+                
                 for i in reversed(range(1, num_of_rows+1)):
                     for j in range(1, 4):
-                        
                         if num_of_dri < len(dri): 
                             if i % 2 == dj:
                                 xy = (j-0.5, i)
                                 ax.text(j-0.75, i-0.2, f'{num_of_dri+1}.', fontsize=24, fontweight='bold', fontname='Ubuntu', color=dr_c[num_of_dri], ha='center')
                                 ax.text(j-0.5, i-minus, f'{dri[num_of_dri]} \n {dri_time[num_of_dri]}', fontsize=9, fontweight='bold', fontname='Ubuntu', color=dr_c[num_of_dri], ha='center')
+                                ax.axhline(y=i-line_minus, xmin=0.05+j/4.-0.25, xmax=0.05+j/4.-0.1, color=dr_c[num_of_dri], linewidth=2, alpha=0.5, zorder=-10)
+                                
+                                ax.axvline(x=j-0.8, ymin=1.*i/float(num_of_rows)-vline_minus+(num_of_rows-i)*0.011, ymax=1.*i/float(num_of_rows)-vline_minus+(num_of_rows-i)*0.011+ 0.01, color=dr_c[num_of_dri], linewidth=2, alpha=0.5, zorder=-10)
+                                ax.axvline(x=j-0.2, ymin=1.*i/float(num_of_rows)-vline_minus+(num_of_rows-i)*0.011, ymax=1.*i/float(num_of_rows)-vline_minus+(num_of_rows-i)*0.011+ 0.01, color=dr_c[num_of_dri], linewidth=2, alpha=0.5, zorder=-10)
                             else:
                                 xy = (j, i)
                                 ax.text(j-0.25, i-0.2, f'{num_of_dri+1}.', fontsize=24, fontweight='bold', fontname='Ubuntu', color=dr_c[num_of_dri], ha='center')
                                 ax.text(j, i-minus, f' {dri[num_of_dri]} \n {dri_time[num_of_dri]}', fontsize=9, fontweight='bold', fontname='Ubuntu', color=dr_c[num_of_dri], ha='center')
+                                ax.axhline(y=i-line_minus, xmin=0.17+j/4.-0.25, xmax=0.17+j/4.-0.1, color=dr_c[num_of_dri], linewidth=2, alpha=0.5, zorder=-10)
+
+                                ax.axvline(x=j-.33, ymin=1.*i/float(num_of_rows)-vline_minus+(num_of_rows-i)*0.011, ymax=1.*i/float(num_of_rows)-vline_minus+(num_of_rows-i)*0.011+ 0.01, color=dr_c[num_of_dri], linewidth=2, alpha=0.5, zorder=-10)
+                                ax.axvline(x=j+.29, ymin=1.*i/float(num_of_rows)-vline_minus+(num_of_rows-i)*0.011, ymax=1.*i/float(num_of_rows)-vline_minus+(num_of_rows-i)*0.011+ 0.01, color=dr_c[num_of_dri], linewidth=2, alpha=0.5, zorder=-10)
+                                
                             ab = AnnotationBbox(image_box, xy, frameon=True, bboxprops=dict(facecolor=dr_c[num_of_dri], alpha=0.8, edgecolor='none', boxstyle='round,pad=0.3'))
+                            
                             
                             ax.add_artist(ab)
                         num_of_dri = num_of_dri + 1
                 ax.axis('off')
-                bg = mpimg.imread(background)
-                plt.imshow(bg, extent=[-0.5, 4.5, -0.5, num_of_rows+1.5], aspect='auto', alpha=0.3)
+                #bg = mpimg.imread(background)
+                #lt.imshow(bg, extent=[-0.5, 4.5, -0.5, num_of_rows+1.5], aspect='auto', alpha=0.3)
                 
                 if len(r) > 20:
                     r1 = r.split(' ')
@@ -163,12 +179,13 @@ for cm in class_moto:
                     r3 = ' '.join(r11) + '\n' + ' '.join(r12)
                 else:
                     r3 = r
-                plt.text(3.9, 2, f"{cm.upper()} - {r3} \n QUALIFICATION ", rotation=90, ha='center', fontweight='bold', fontsize=25, color="#1110103B", clip_on=True )
+                plt.text(3.6, 2.2, f"{cm.upper()} - {r3} \n QUALIFICATION ", rotation=90, ha='center', fontweight='bold', fontsize=25, color="#14111139", clip_on=True )
+                plt.text(0.1, num_of_rows+1, f"motoslicks.com", fontweight='bold', fontsize=25, color="#14111139",)
                 #plt.title('Fastest lap speed by driver')
                 plt.tight_layout()
-                plt.savefig(f"{images_moto}/{cm}/{y}/{r}/{s}/plot_qualify.jpg")
+                plt.savefig(f"{images_moto}/{cm}/{y}/{r}/{s}/plot_qualify.webp", dpi=100)
                 plt.close()
-
+        
             important_done.append('yes')
             new_dict = {'race': important_races, 
                         'is_done': important_done, 
@@ -176,3 +193,7 @@ for cm in class_moto:
                         'class': important_classes}
             new_df = pd.DataFrame(new_dict)
             new_df.to_csv('/home/boris/Documents/matplotlib_exercize/done/qualifications_1.csv', index=False)
+
+
+import transfer_images
+transfer_images.sync_motoslicks_images()

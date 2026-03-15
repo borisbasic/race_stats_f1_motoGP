@@ -54,8 +54,8 @@ for cm in class_moto:
         continue
     year = os.listdir(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/{cm}')
     for y in year:
-        if y not in ['2025']:
-            continue
+        #if y not in ['2013', '2014', '2015']:
+        #    continue
         list_of_year = os.listdir(f'{images_moto}/{cm}')
         if y not in list_of_year:
             os.mkdir(f'{images_moto}/{cm}/{y}')
@@ -72,7 +72,7 @@ for cm in class_moto:
             
                 if 'yes' in dones:
                     continue
-                if s not in ['rac', 'spr']:
+                if s not in ['rac', 'spr', 'rac2']:
                     continue
                 list_of_seasion = os.listdir(f'{images_moto}/{cm}/{y}/{r}')
                 if s not in list_of_seasion:
@@ -183,12 +183,13 @@ for cm in class_moto:
                             left=a_df['time_milisec'], color=a_df.loc[0, 'driver_color'])
                     
                     plt.title(f"#{a_df.loc[0, 'driver_number']}  {a_df.loc[0, 'driver_name']}")
+                    plt.text(0.1, -0.5, f"motoslicks.com", fontweight='bold', fontsize=25, color="#140E0E39",)
                     plt.ylabel('Laps')
                     plt.xlabel('Driver lap time')
                     plt.tight_layout()
                     plt.legend(loc='upper left', fontsize=15)
                     #plt.show()
-                    plt.savefig(f'{fold}/race/{d}_lap_times.jpg')
+                    plt.savefig(f'{fold}/race/{d}_lap_times.webp')
                     plt.close()
                         
                     #------------------- Sector 1
@@ -241,12 +242,13 @@ for cm in class_moto:
                             left=a_df['sector_1_milisec'], color=a_df.loc[0, 'driver_color'])
                     
                     plt.title(f"#{a_df.loc[0, 'driver_number']}  {a_df.loc[0, 'driver_name']}")
+                    plt.text(0.1, -0.5, f"motoslicks.com", fontweight='bold', fontsize=25, color="#140E0E39",)
                     plt.ylabel('Laps')
                     plt.xlabel('Driver sector 1 time')
                     plt.tight_layout()
                     plt.legend(loc='upper left', fontsize=15)
                     #plt.show()
-                    plt.savefig(f'{fold}/sector_1/{d}_lap_times.jpg')
+                    plt.savefig(f'{fold}/sector_1/{d}_lap_times.webp')
                     plt.close()
 
                     #------------------- Sector 2
@@ -299,12 +301,13 @@ for cm in class_moto:
                             left=a_df['sector_2_milisec'], color=a_df.loc[0, 'driver_color'])
                     
                     plt.title(f"#{a_df.loc[0, 'driver_number']}  {a_df.loc[0, 'driver_name']}")
+                    plt.text(0.1, -0.5, f"motoslicks.com", fontweight='bold', fontsize=25, color="#140E0E39",)
                     plt.ylabel('Laps')
                     plt.xlabel('Driver sector 2 time')
                     plt.tight_layout()
                     plt.legend(loc='upper left', fontsize=15)
                     #plt.show()
-                    plt.savefig(f'{fold}/sector_2/{d}_lap_times.jpg')
+                    plt.savefig(f'{fold}/sector_2/{d}_lap_times.webp')
                     plt.close()
                     
 
@@ -358,12 +361,14 @@ for cm in class_moto:
                             left=a_df['sector_3_milisec'], color=a_df.loc[0, 'driver_color'])
                     
                     plt.title(f"#{a_df.loc[0, 'driver_number']}  {a_df.loc[0, 'driver_name']}")
+
+                    plt.text(0.1, -0.5, f"motoslicks.com", fontweight='bold', fontsize=25, color="#140E0E39",)
                     plt.ylabel('Laps')
                     plt.xlabel('Driver sector 3 time')
                     plt.tight_layout()
                     plt.legend(loc='upper left', fontsize=15)
                     #plt.show()
-                    plt.savefig(f'{fold}/sector_3/{d}_lap_times.jpg')
+                    plt.savefig(f'{fold}/sector_3/{d}_lap_times.webp')
                     plt.close()
 
 
@@ -417,12 +422,13 @@ for cm in class_moto:
                             left=a_df['sector_4_milisec'], color=a_df.loc[0, 'driver_color'])
                     
                     plt.title(f"#{a_df.loc[0, 'driver_number']}  {a_df.loc[0, 'driver_name']}")
+                    plt.text(0.1, -0.5, f"motoslicks.com", fontweight='bold', fontsize=25, color="#140E0E39",)
                     plt.ylabel('Laps')
                     plt.xlabel('Driver sector 4 time')
                     plt.tight_layout()
                     plt.legend(loc='upper left', fontsize=15)
                     #plt.show()
-                    plt.savefig(f'{fold}/sector_4/{d}_lap_times.jpg')
+                    plt.savefig(f'{fold}/sector_4/{d}_lap_times.webp')
                     plt.close()
                 important_done.append('yes')
                 important_races.append(r)
@@ -436,3 +442,7 @@ for cm in class_moto:
                             'session': important_session}
                 new_df = pd.DataFrame(new_dict)
                 new_df.to_csv('/home/boris/Documents/matplotlib_exercize/done/laps_sector.csv', index=False)
+
+
+import transfer_images
+transfer_images.sync_motoslicks_images()
