@@ -23,8 +23,6 @@ def run_command(command, shell=True):
 def deploy():
     print("🚀 Započeta sinhronizacija za MotoSlicks...")
 
-    # 1. SINHRONIZACIJA BAZE (Sve tabele, samo nove stvari)
-    # Koristimo .my.cnf koji si već napravio da ne kucamo pass za lokalni dump
     print("📦 1/2 Ažuriram bazu podataka (sve tabele)...")
     TABLES = "entries races"
     TABLES_NO_YEAR = "fastest_laps bikes circuit_info"
@@ -49,17 +47,15 @@ def deploy():
     else:
         print(f"   Greška pri ažuriranju baze: {output_1}")
 
-    # 2. SINHRONIZACIJA SLIKA (rsync)
     print("🖼️  2/2 Prenosim nove slike/PDF-ove...")
     
-    # Dodajemo '/' na kraj lokalne putanje da rsync ne duplira foldere
     rsync_cmd = f"rsync -avz {LOCAL_IMAGES_PATH} {REMOTE_USER}@{REMOTE_IP}:{REMOTE_IMAGES_PATH}"
     
     success, output = run_command(rsync_cmd)
     if success:
-        print("   ✅ Slike/fajlovi su uspešno prebačeni.")
+        print("    Slike/fajlovi su uspešno prebačeni.")
     else:
-        print(f"   ❌ Greška pri rsync-u: {output}")
+        print(f"    Greška pri rsync-u: {output}")
 
     print("\n Deploy završen!")
 

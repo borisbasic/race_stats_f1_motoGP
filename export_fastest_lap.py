@@ -327,4 +327,4 @@ for cm in class_moto:
 
 
 import transfer_images
-transfer_images.sync_motoslicks_images()
+transfer_images.deploy()

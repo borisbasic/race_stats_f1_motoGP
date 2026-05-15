@@ -187,4 +187,4 @@ for cm in class_moto:
             new_df.to_csv('/home/boris/Documents/matplotlib_exercize/done/qualifications_2.csv', index=False)
 
 import transfer_images
-transfer_images.sync_motoslicks_images()
+transfer_images.deploy()

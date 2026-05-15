@@ -28,7 +28,7 @@ all_races = pd.read_csv('/home/boris/Documents/matplotlib_exercize/moto_pdfs/mot
 # Pokrećemo driver
 op = webdriver.FirefoxOptions()
 op.add_argument("--headless")
-driver = webdriver.Firefox(options=op)
+driver = webdriver.Firefox()#options=op)
 
 for ind, row in all_races.iterrows():
     ses = '2026'
@@ -128,4 +128,4 @@ driver.quit()
 print("Moto2 obrada završena.")
 
 import transfer_images
-transfer_images.sync_motoslicks_images()
+transfer_images.deploy()

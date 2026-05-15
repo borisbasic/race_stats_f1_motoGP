@@ -2,9 +2,13 @@ import pdfplumber
 import pandas as pd
 import bar_chart_race as bcr
 import matplotlib.pyplot as plt
-race = 'SILVERSTONE'
+from moviepy.editor import VideoFileClip, AudioFileClip, ImageClip, concatenate_videoclips, TextClip, CompositeVideoClip
+from moviepy.audio.fx.all import audio_fadeout
+import os, random
+race = 'ASSEN'
 season = '2024'
-pdf_path = f'/home/boris/Documents/matplotlib_exercize/{race}_{season}/LapChart.pdf'
+pdf_path = f'/home/boris/Documents/matplotlib_exercize/moto2mot3motogp_old_scripts/{race}_{season}/LapChart.pdf'
+base_path = f'/home/boris/Documents/matplotlib_exercize/moto2mot3motogp_old_scripts/{race}_{season}'
 
 drivers = ['Francesco BAGNAIA', 'Marc MARQUEZ', 'Marco BEZZECCHI', 'Alex MARQUEZ', 'Enea BASTIANINI', 'Brad BINDER', 
            'Fabio DI GIANNANTONI', 'Miguel OLIVEIRA', 'Pedro ACOSTA', 'Maverick VIÑALES', 'Raul FERNANDEZ',
@@ -107,33 +111,91 @@ for sg in cols:
     starting_drivers.append(drivers[ind])
     colors.append(drivers_colors[ind])
 points_df.columns = starting_drivers
+def create_static_frame(text, subtitle, filename, color='#ffffff'):
+    fig, ax = plt.subplots(figsize=(10, 16), facecolor='#050505')
+    ax.set_facecolor('#050505')
+    
+    ax.text(0.5, 0.55, text, color=color, fontsize=55, ha='center', va='center', weight='bold', family='Ubuntu')
+    ax.text(0.5, 0.40, subtitle, color='gray', fontsize=35, ha='center', va='center', family='Ubuntu')
+    
+    ax.axis('off')
+    plt.savefig(filename, dpi=100, facecolor=fig.get_facecolor(), pad_inches=0.5)
+    plt.close()
+
+winner_name = points_df.iloc[-1].idxmax()
+
+intro_img = f'{base_path}/intro.png'
+outro_img = f'{base_path}/outro.png'
+create_static_frame(f"{race} {season}", "MotoGP Lap Chart Analysis", intro_img)
+create_static_frame("RACE WINNER", winner_name.upper(), outro_img, color='#f5e642')
+
+main_video_path = f'{base_path}/LapChart_raw.mp4'
+
+plt.rcParams['figure.subplot.left'] = 0.2  
+plt.rcParams['figure.subplot.right'] = 0.95
+
 bcr.bar_chart_race(
     df=points_df, 
-    title=f'{race}, 2024 MotoGP Championship Race', 
+    title=f'{race}, {season} MotoGP Championship Race', 
     orientation='h', 
     sort='desc', 
     n_bars=15, 
     steps_per_period=40, 
     period_length=1000,
-    filename=f'/home/boris/Documents/matplotlib_exercize/{race}_{season}/LapChart.mp4', 
+    filename=f'{main_video_path}', 
     cmap=colors,
     label_bars=False,
-    figsize=(15, 10),
+    figsize=(10, 16),
     shared_fontdict={'family': 'Ubuntu', 'weight': 'bold',
                                     'color': 'rebeccapurple'},
-    bar_kwargs={'alpha': .7},
+    bar_kwargs={'alpha': .9},
     fixed_max=max(points)
 )
 
-from moviepy.editor import VideoFileClip, AudioFileClip
-import os, random
+all_music_files = [f for f in os.listdir('/home/boris/Documents/matplotlib_exercize/music') if f.endswith('.mp3')]
+mf = '/home/boris/Documents/matplotlib_exercize/music/' + random.choice(all_music_files)
 
-all_music_files = os.listdir('/home/boris/Documents/matplotlib_exercize/music')
-vf = f'/home/boris/Documents/matplotlib_exercize/{race}_{season}/LapChart.mp4'
+intro_clip = ImageClip(intro_img).set_duration(3)
+video_clip = VideoFileClip(main_video_path)
+outro_clip = ImageClip(outro_img).set_duration(4)
 
-mf = '/home/boris/Documents/matplotlib_exercize/music/'+random.choice(all_music_files)
+final_video = concatenate_videoclips([intro_clip, video_clip, outro_clip], method="compose")
 
-vc = VideoFileClip(vf)
+
+def create_watermark_img(filename):
+    fig, ax = plt.subplots(figsize=(4, 1), facecolor='none')
+    # Transparentna pozadina
+    fig.patch.set_alpha(0)
+    ax.patch.set_alpha(0)
+    ax.text(0.5, 0.5, "motoslicks.com", color='white', alpha=0.5, 
+            fontsize=20, ha='center', va='center', weight='bold')
+    ax.axis('off')
+    plt.savefig(filename, transparent=True, dpi=100)
+    plt.close()
+
+watermark_path = f'{base_path}/wm.png'
+create_watermark_img(watermark_path)
+
+# 2. Učitaj kao ImageClip i nalepi
+watermark = ImageClip(watermark_path).set_duration(final_video.duration)
+watermark = watermark.set_position(("right", "bottom")).margin(right=20, bottom=20, opacity=0)
+
+final_video_ready = CompositeVideoClip([final_video, watermark])
+
 mc = AudioFileClip(mf)
-fc = vc.set_audio(mc.subclip(0, vc.duration))
-fc.write_videofile(f'/home/boris/Documents/matplotlib_exercize/{race}_{season}/LapChart_with_audio.mp4',  codec="libx264", audio_codec="aac")
+temp_audio = mc.subclip(0, final_video_ready.duration)
+
+from moviepy.audio.fx.all import audio_fadeout
+final_audio = audio_fadeout(temp_audio, 2)
+
+final_video_ready = final_video_ready.set_audio(final_audio)
+
+final_output = f'{base_path}/MotoSlicks_Branded_Analysis.mp4'
+final_video_ready.write_videofile(final_output, codec="libx264", audio_codec="aac", fps=24)
+
+print(f"Brendirani video spreman na: {final_output}")
+
+os.remove(intro_img)
+os.remove(outro_img)
+
+print(f"Video uspešno generisan: {final_output}")

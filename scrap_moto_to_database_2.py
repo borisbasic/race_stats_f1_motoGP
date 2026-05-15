@@ -35,7 +35,7 @@ for ind, row in all_races.iterrows():
         continue
 
     url = f'https://www.motogp.com/en/gp-results/{ses}/{race_small}/moto3/rac/classification'
-    driver = webdriver.Firefox(options=op)
+    driver = webdriver.Firefox()#options=op)
     driver.get(url)
 
     # Cookie Bypass
@@ -79,6 +79,9 @@ for ind, row in all_races.iterrows():
                 name_file = pdf_url.split('?')[0].split('/')[-1]
                 full_path = os.path.join(session_dir, name_file)
 
+                if os.path.exists(full_path) and os.path.getsize(full_path) > 2000:
+                    continue
+
                 print(f"Skidam preko urllib: {name_file} ({s_text})")
                 
                 # URLLIB DOWNLOAD
@@ -100,6 +103,3 @@ for ind, row in all_races.iterrows():
         driver.switch_to.window(driver.window_handles[0])
 
     driver.quit()
-
-import transfer_images
-transfer_images.sync_motoslicks_images()

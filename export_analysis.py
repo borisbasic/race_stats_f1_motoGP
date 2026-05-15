@@ -71,7 +71,7 @@ for cm in class_moto:
             seasion = os.listdir(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/{cm}/{y}/{r}')
             for s in seasion:
                 dones = important_things_csv[(important_things_csv['race'] == r) & (important_things_csv['year'] == int(y)) & (important_things_csv['class'] == cm) & (important_things_csv['session'] == s)]['is_done'].tolist()
-                
+                print(s)
                 if 'yes' in dones:
                     continue
                 print(r)
@@ -179,8 +179,7 @@ for cm in class_moto:
                     
                     if data[0].isnumeric() and len(data)>=6:
                         
-                        at = all_text[i].replace('*', '')
-                        at = at.replace('  ', ' ')
+                        at = all_text[i].replace('  ', ' ')
                         at = at.replace('Race', '')
                         at = at.replace('MotoGP', '')
                         at = at.replace('Moto2', '')
@@ -191,7 +190,7 @@ for cm in class_moto:
                         at = at.replace('i2', '')
                         at = at.replace('i1', '')
                         p_in = False
-                        if 'P' in all_text[i][:20]:
+                        if 'P' in all_text[i][:20] or '*' in all_text[i][:20]:
                             p_in = True
                         at = at.replace('P', '')
                         
@@ -303,7 +302,8 @@ for cm in class_moto:
                                                                     bike_id=bike_id,
                                                                     race_id=race_id,
                                                                     nickname=rider_nickname,
-                                                                    country=rider_country
+                                                                    country=rider_country,
+                                                                    p_in=row['p_in']
                         )
                         
                         with engine.connect() as conn:
@@ -332,4 +332,4 @@ for cm in class_moto:
 
 
 import transfer_images
-transfer_images.sync_motoslicks_images()
+transfer_images.deploy()

@@ -21,8 +21,8 @@ for cm in class_moto:
         continue
     year = os.listdir(f'/home/boris/Documents/matplotlib_exercize/moto_pdfs/{cm}')
     for y in year:
-        if y != '2026':
-            continue
+        #if y != '2026':
+        #    continue
         list_of_year = os.listdir(f'{images_moto}/{cm}')
         if y not in list_of_year:
             os.mkdir(f'{images_moto}/{cm}/{y}')
@@ -73,6 +73,7 @@ for cm in class_moto:
                     }
 
                     for ti in text_import:
+                        ti = ti.replace('* ', '')
                         text_dict['number'].append(ti.split(' ')[0])
                         text_dict['rider'].append(' '.join(ti.split('(')[0].split(' ')[1:]))
                         text_dict['nickname'].append(ti.split('(')[1].split(')')[0])
@@ -98,5 +99,5 @@ for cm in class_moto:
             new_df.to_csv('/home/boris/Documents/matplotlib_exercize/done/important_things.csv', index=False)
 
 
-import transfer_images
-transfer_images.sync_motoslicks_images()
+#import transfer_images
+#transfer_images.deploy()
