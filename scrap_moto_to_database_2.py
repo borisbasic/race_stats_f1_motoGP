@@ -35,7 +35,7 @@ for ind, row in all_races.iterrows():
         continue
 
     url = f'https://www.motogp.com/en/gp-results/{ses}/{race_small}/moto3/rac/classification'
-    driver = webdriver.Firefox()#options=op)
+    driver = webdriver.Firefox(options=op)
     driver.get(url)
 
     # Cookie Bypass
@@ -103,3 +103,15 @@ for ind, row in all_races.iterrows():
         driver.switch_to.window(driver.window_handles[0])
 
     driver.quit()
+
+
+import export_important_things
+import export_img_date
+import export_analysis
+import export_laps_sector
+import export_fastest_lap
+import export_qualifications
+import export_qualifications_2
+import export_speed
+import export_box_plot
+import export_race_plot_line

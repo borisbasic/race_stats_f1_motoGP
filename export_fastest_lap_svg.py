@@ -6,6 +6,7 @@ import seaborn as sns
 import os
 import matplotlib.image as mpimg
 from matplotlib.patches import FancyBboxPatch
+from svg_create import create_svg
 sns.set_theme()
 plt.style.use('ggplot')
 
@@ -46,7 +47,7 @@ def equal_time(row):
     else:
         return 'no'
 images_moto = '/home/boris/Documents/motogp_api/images'
-print('Let"s go')
+
 for cm in class_moto:
     important_things_csv = '/home/boris/Documents/matplotlib_exercize/done/fastest_lap.csv'
     important_things_csv = pd.read_csv(important_things_csv)
@@ -197,134 +198,25 @@ for cm in class_moto:
                     result = conn.execute(insert_stmt)
                     conn.commit()
 
-
-                fig, ax = plt.subplots(figsize=(15, 9), facecolor="#1a1a1a")  
-                ax.set_facecolor('#1a1a1a')
-                ax.set_xlim(0, lap_time+0.5)
-                ax.set_ylim(0, 5)
-                
-                color_1 = drivers_colors[drivers_.index(fs_1_driver)]
-                color_2 = drivers_colors[drivers_.index(fs_2_driver)]
-                color_3 = drivers_colors[drivers_.index(fs_3_driver)]
-                color_4 = drivers_colors[drivers_.index(fs_4_driver)]
-                rect_s1 = FancyBboxPatch(
-                    (0.5, 2), fs_1-0.5, 1,
-                    boxstyle="round,pad=0.2,rounding_size=0.15",  # zaobljenje ivica
-                    linewidth=0.5,
-                    edgecolor="none",
-                    facecolor=color_1,
-                    alpha=0.8,
-                    mutation_aspect=1,
-                    zorder=2,
-                    #shadow=True,  
-                )
-                rect_s2 = FancyBboxPatch(
-                    (fs_1+0.5, 2), fs_2-0.5, 1,
-                    boxstyle="round,pad=0.2,rounding_size=0.15",  # zaobljenje ivica
-                    linewidth=0.5,
-                    edgecolor="none",
-                    facecolor=color_2,
-                    alpha=0.8,
-                    mutation_aspect=1,
-                    zorder=2,
-                    #shadow=True,  
-                )
-                rect_s3 = FancyBboxPatch(
-                    (0.5+fs_1 + fs_2, 2), fs_3-0.5, 1,
-                    boxstyle="round,pad=0.2,rounding_size=0.15",  # zaobljenje ivica
-                    linewidth=0.5,
-                    edgecolor="none",   
-                    facecolor=color_3,
-                    alpha=0.8,
-                    mutation_aspect=1,
-                    zorder=2,
-                    #shadow=True,  
-                )
-                rect_s4 = FancyBboxPatch(
-                    (0.5+fs_1 + fs_2 + fs_3, 2), fs_4-0.5, 1,
-                    boxstyle="round,pad=0.2,rounding_size=0.15",  # zaobljenje ivica
-                    linewidth=0.5,      
-                    edgecolor="none",
-                    facecolor=color_4,  
-                    alpha=0.8,
-                    mutation_aspect=1,
-                    zorder=2,   
-                    #shadow=True,  
-                )
-
-                ax.add_patch(rect_s1)
-                ax.add_patch(rect_s2)
-                ax.add_patch(rect_s3)
-                ax.add_patch(rect_s4) 
-                ax.axis('off')
-                bg = mpimg.imread(background)
-                plt.imshow(bg, extent=[-0.5, lap_time+0.5, -0.5, 5.5], aspect='auto', alpha=0.3)
-                plt.text(lap_time/2, 3.5, f'Fastest Lap: {to_real_time(lap_time)}', fontweight='bold', fontsize=20, color="black", va='center', ha='center', clip_on=True,
-                         bbox=dict(
-                                    boxstyle="round,pad=0.4",       
-                                    edgecolor="white",     
-                                    color="#ffffff",    
-                                    linewidth=2.5,             
-                                    alpha=0.8                  
-                                ) )
-                plt.text(lap_time/2, 1, f'Race: {r} {y} \nSession: {s} \n{cm.upper()}', fontweight='bold', fontsize=20, color="black", ha='center', va='center',clip_on=True ,
-                         bbox=dict(
-                                    boxstyle="round,pad=0.4",       
-                                    edgecolor="white",  
-                                    color='#ffffff',       
-                                    linewidth=1.5,             
-                                    alpha=0.8                  
-                                ))
-                plt.text(fs_1 / 2, 2.5, f'Sector 1 \n {fs_1} s\n{fs_1_driver}', fontweight='bold', color='white', fontsize=12, ha='center', va='center',
-                         bbox=dict(
-                                    boxstyle="round,pad=0.4",       
-                                    edgecolor="white",    
-                                    color=color_1,     
-                                    linewidth=1.5,             
-                                    alpha=0.8                  
-                                ))
-                plt.text(fs_1 + fs_2 / 2, 2.5, f'Sector 2\n {fs_2} s\n{fs_2_driver}',fontweight='bold', color='white', fontsize=12, ha='center', va='center',
-                         bbox=dict(
-                                    boxstyle="round,pad=0.4",       
-                                    edgecolor="white",   
-                                    color=color_2,           
-                                    linewidth=1.5,             
-                                    alpha=0.8               
-                                ))  
-                plt.text(fs_1 + fs_2 + fs_3 / 2, 2.5, f'Sector 3\n {fs_3} s\n{fs_3_driver}',fontweight='bold', color='white', fontsize=12, ha='center', va='center',
-                         bbox=dict(
-                                    boxstyle="round,pad=0.4",       
-                                    edgecolor="white",  
-                                    color=color_3,            
-                                    linewidth=1.5,             
-                                    alpha=0.8                  
-                                ))
-                plt.text(fs_1 + fs_2 + fs_3 + fs_4 / 2, 2.5, f'Sector 4\n {fs_4} s\n{fs_4_driver}',fontweight='bold', color='white', fontsize=12, ha='center', va='center',
-                         bbox=dict(
-                                    boxstyle="round,pad=0.4",       
-                                    edgecolor="white",    
-                                    color=color_4,          
-                                    linewidth=1.5,             
-                                    alpha=0.8                  
-                                ))
-                plt.text(0.5, 0.1, f"motoslicks.com", fontweight='bold', fontsize=25, color="#FAF0F03A",)
-                plt.tight_layout()
-                plt.savefig(f"{images_moto}/{cm}/{y}/{r}/{s}/fastest_lap.webp")
-                #plt.show()
-                plt.close()
-                important_done.append('yes')
-                important_session.append(s)
-                important_races.append(r)
-                important_years.append(y)
-                important_classes.append(cm)
-                new_dict = {'race': important_races, 
-                            'is_done': important_done, 
-                            'year': important_years, 
-                            'class': important_classes,
-                            'session': important_session}
-                new_df = pd.DataFrame(new_dict)
-                new_df.to_csv('/home/boris/Documents/matplotlib_exercize/done/fastest_lap.csv', index=False)
+                if create_svg(cm, y, r, s, s, race_id, r) == 0:
+                    import export_fastest_lap
+                else:
+                    create_svg(cm, y, r, s, s, race_id, r)
+                    os.system(f"rsvg-convert -h 800 -f png -o svg_temp.png svg_circuit/svg_{r}.svg")
+                    os.system(f"cwebp -q 80 svg_temp.png -o {images_moto}/{cm}/{y}/{r}/{s}/fastest_lap.webp")
+                    important_done.append('yes')
+                    important_session.append(s)
+                    important_races.append(r)
+                    important_years.append(y)
+                    important_classes.append(cm)
+                    new_dict = {'race': important_races, 
+                                'is_done': important_done, 
+                                'year': important_years, 
+                                'class': important_classes,
+                                'session': important_session}
+                    new_df = pd.DataFrame(new_dict)
+                    new_df.to_csv('/home/boris/Documents/matplotlib_exercize/done/fastest_lap.csv', index=False)
 
 
-import transfer_images
-transfer_images.deploy()
+    import transfer_images
+    transfer_images.deploy()

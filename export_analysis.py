@@ -16,6 +16,31 @@ def clear_speed(s):
         return 0.0
     return float(s1)
 
+def tyre_to_num(s):
+    a = 0
+    b = 0
+    if b < 5:
+        b = 0
+    else:
+        b = 1
+    for s1 in s:
+        if s1 == 'Tyre':
+            a += 1
+    return (a, b)
+
+def get_tyre(s):
+    s = s.replace('Tyre', '')
+    if s == 'Slick-Soft':
+        return 'ss'
+    elif s == 'Slick-Medium':
+        return 'sm'
+    elif s == 'Slick-Hard':
+        return 'sh'
+    elif s == 'Wet-Medium':
+        return 'wm'
+    elif s == 'Wet-Soft':
+        return 'ws'
+
 engine = create_engine("mariadb+mariadbconnector://root:boris123@localhost:3306/motogp")
 metadata = MetaData()
 
@@ -43,6 +68,9 @@ sns.set_theme()
 plt.style.use('ggplot')
 
 class_moto = os.listdir('/home/boris/Documents/matplotlib_exercize/moto_pdfs')
+
+ft = 'n/a'
+rt = 'n/a'
 
 images_moto = '/home/boris/Documents/motogp_api/images'
 for cm in class_moto:
@@ -150,7 +178,9 @@ for cm in class_moto:
                             'sector_3': [],
                             'sector_4': [],
                             'speed': [],
-                            'p_in': []}
+                            'p_in': [],
+                            'ft': [],
+                            'rt': []}
                 all_data = []
                 cond = False
                 for i in range(len(all_text)):
@@ -174,8 +204,36 @@ for cm in class_moto:
                                                 'sector_3': [],
                                                 'sector_4': [],
                                                 'speed': [],
-                                                'p_in': []}
+                                                'p_in': [],
+                                                'ft': [],
+                                                'rt': []}
                             break
+                    a, b = tyre_to_num(data)
+
+                    if a == 0:
+                        ni = 1
+                        nj = 2
+                    elif a == 2:
+                        ni = 0
+                        nj = 0
+                    elif a == 1 and b == 0:
+                        ni = 0
+                        nj = 1
+                    elif a == 1 and b == 1:
+                        ni = 1
+                        nj = 1
+                    if 'Front' in data:
+                        ft = get_tyre(data[5-ni])
+                    if 'Rear' in data:
+                        rt = get_tyre(data[8-nj])
+
+                    if 'Slick-MediumRear' in data:
+                        ft = get_tyre(data[5].replace('Rear', ''))
+                        rt = get_tyre(data[6].replace('Tyre', ''))
+                    if ft == '':
+                        ft = 'n/a'
+                    if rt == '':
+                        rt = 'n/a'
                     
                     if data[0].isnumeric() and len(data)>=6:
                         
@@ -193,6 +251,8 @@ for cm in class_moto:
                         if 'P' in all_text[i][:20] or '*' in all_text[i][:20]:
                             p_in = True
                         at = at.replace('P', '')
+                        at = at.replace('*', '')
+                        at = at.replace('  ', ' ')
                         
                         #if 'P' not in at:
                         data_ = at.split(' ')
@@ -228,6 +288,9 @@ for cm in class_moto:
                             driver_dict['p_in'].append('yes')
                         else:
                             driver_dict['p_in'].append('no')
+
+                        driver_dict['ft'].append(ft)
+                        driver_dict['rt'].append(rt)
                         if len(driver_dict['driver_name'])>0:
                             temp_df = pd.DataFrame(driver_dict)
                             temp_df['time'] = temp_df['time'].apply(lambda x: to_miliseconds(x))
@@ -253,6 +316,17 @@ for cm in class_moto:
                     except:
                         continue
                     for ind, row in temp_df.iterrows(): 
+                        ft_h = 'n/a'
+                        rt_h = 'n/a'
+                        if pd.isna(row['ft']):
+                            ft_h = 'n/a'
+                        else:
+                            ft_h = row['ft']
+                        if pd.isna(row['rt']):
+                            rt_h = 'n/a'
+                        else:                
+                            rt_h = row['rt']
+                        print(row)
                         try:
                             rider_bike = drivers_n[(drivers_n['driver_name']) == row['driver_name']]['team'].tolist()[0].strip()
                         except:
@@ -303,7 +377,9 @@ for cm in class_moto:
                                                                     race_id=race_id,
                                                                     nickname=rider_nickname,
                                                                     country=rider_country,
-                                                                    p_in=row['p_in']
+                                                                    p_in=row['p_in'],
+                                                                    ft=ft_h,
+                                                                    rt=rt_h
                         )
                         
                         with engine.connect() as conn:

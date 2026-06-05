@@ -129,3 +129,14 @@ print("Moto2 obrada završena.")
 
 import transfer_images
 transfer_images.deploy()
+
+import export_important_things
+import export_img_date
+import export_analysis
+import export_laps_sector
+import export_fastest_lap
+import export_qualifications
+import export_qualifications_2
+import export_speed
+import export_box_plot
+import export_race_plot_line
